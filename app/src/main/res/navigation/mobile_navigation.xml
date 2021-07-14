@@ -90,4 +90,12 @@
         android:name="com.example.project.ui.ProfileOtherUserFragment"
         android:label="dfghbjnkm"
         tools:layout="@layout/profile_other_user_fragment" />
+
+    <fragment
+        android:id="@+id/navigation_search"
+        android:name="com.example.project.ui.search.SearchFragment"
+        android:label="dfghbjnkm"
+        tools:layout="@layout/fragment_search" >
+
+    </fragment>
 </navigation>

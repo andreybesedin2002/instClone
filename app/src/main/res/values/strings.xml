@@ -24,4 +24,5 @@
     <string name="youAreMore30">от 26 до 35</string>
     <string name="youAreMore36">старше 36</string>
     <string name="action_register">Sing up</string>
+    <string name="title_search">Search</string>
 </resources>

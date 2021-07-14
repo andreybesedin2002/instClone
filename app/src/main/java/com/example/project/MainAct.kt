@@ -112,7 +112,7 @@ class MainAct : AppCompatActivity() {
         navController = findNavController(R.id.nav_host_fragment)
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_dashboard, R.id.navigation_home, R.id.navigation_notifications
+                R.id.navigation_dashboard, R.id.navigation_search,R.id.navigation_home, R.id.navigation_notifications
             )
         )
         navView.visibility = View.GONE
