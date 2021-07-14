@@ -25,6 +25,7 @@ tools:context=".ui.ProfileOtherUserFragment">
             android:layout_height="128dp"
             android:layout_marginTop="100dp"
             android:layout_marginBottom="12dp"
+            android:background="@color/no_photo"
             app:layout_constraintBottom_toTopOf="@+id/name_profile"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.495"
@@ -69,7 +70,7 @@ tools:context=".ui.ProfileOtherUserFragment">
             android:text="Message"
             android:textColor="@color/black"
             android:textStyle="bold|italic"
-            app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+            app:layout_constraintBottom_toTopOf="@+id/recycler_oter_profile"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:ignore="HardcodedText,MissingConstraints" />
@@ -93,7 +94,7 @@ tools:context=".ui.ProfileOtherUserFragment">
 
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+            android:id="@+id/recycler_oter_profile"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="50dp"

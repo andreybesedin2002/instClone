@@ -43,19 +43,22 @@ class ChatFragment : Fragment() {
             recyclerView_ = InstanceView.findViewById(R.id.recyclerView)
 
             recyclerView_.layoutManager = LinearLayoutManager(InstanceVContext)
-            recyclerView_.adapter = RecyclerAdapterPhotosList(fillList1() as ArrayList<String>)
+            recyclerView_.adapter = RecyclerAdapterPhotosList(fillList1())
 
             val mgScrollView =
                 InstanceView.findViewById<NestedScrollView>(R.id.dsfg) as NestedScrollView
             mgScrollView.isSmoothScrollingEnabled = true;
         }
-        private fun fillList1(): List<String> {
-            val dat = mutableListOf<String>()
-            (0..15).forEach { i ->
-                Log.i("TAG", "load String : $i")
-                dat.add("ds")
+        private fun fillList1(): ArrayList<ArrayList<Int>> {
+            val dat = ArrayList<ArrayList<Int>>()
+            (0..5).forEach { i ->
+                val d = ArrayList<Int>()
+                d.add(R.drawable.ic_launcher_foreground)
+                d.add(R.drawable.ic_launcher_foreground)
+                d.add(R.drawable.ic_launcher_foreground)
+                dat.add(d)
             }
-            Log.i("TAG", "fillList: ---")
+            Log.i("TAG", "fillList1:sdf $dat ")
             return dat
         }
         lateinit var db: AppDataBase

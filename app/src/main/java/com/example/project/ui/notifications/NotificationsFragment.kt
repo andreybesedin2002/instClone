@@ -36,7 +36,7 @@ class NotificationsFragment : Fragment() {
 
         recyclerView_ = root.findViewById(R.id.recyclerView)
         recyclerView_.layoutManager = LinearLayoutManager(context)
-        recyclerView_.adapter = RecyclerAdapterPhotosList(fillList() as ArrayList<String>)
+        recyclerView_.adapter = RecyclerAdapterPhotosList(fillList1())
 
         //
         val imgView: ImageView = root.findViewById(R.id.imageView)
@@ -74,16 +74,18 @@ class NotificationsFragment : Fragment() {
 
         return root
     }
-    private fun fillList(): List<String> {
-        val dat = mutableListOf<String>()
-                (0..15).forEach { i ->
-                    Log.i("TAG", "load String : $i")
-                    dat.add("ds")
-                }
-        Log.i("TAG", "fillList: ---")
+    private fun fillList1(): ArrayList<ArrayList<Int>> {
+        val dat = ArrayList<ArrayList<Int>>()
+        (0..5).forEach { i ->
+            val d = ArrayList<Int>()
+            d.add(R.drawable.ic_launcher_foreground)
+            d.add(R.drawable.ic_launcher_foreground)
+            d.add(R.drawable.ic_launcher_foreground)
+            dat.add(d)
+        }
+        Log.i("TAG", "fillList1:sdf $dat ")
         return dat
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val mgScrollView = view.findViewById(R.id.scroll) as NestedScrollView

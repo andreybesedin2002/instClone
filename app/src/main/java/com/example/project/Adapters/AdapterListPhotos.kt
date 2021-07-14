@@ -15,7 +15,7 @@ import java.io.File
 import java.util.*
 
 
-class RecyclerAdapterPhotosList(private val names: ArrayList<String>) :
+class RecyclerAdapterPhotosList(private val names: ArrayList<ArrayList<Int>>) :
     RecyclerView.Adapter<RecyclerAdapterPhotosList.MyViewHolder>() {
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -37,7 +37,7 @@ class RecyclerAdapterPhotosList(private val names: ArrayList<String>) :
 
     }
 
-    fun addNewRandomItems(t: List<String>) = (0..9).forEach { i -> names.add(t[i]) }
+    fun addNewRandomItems(t: List<List<Int>>) = (0..9).forEach { i -> names.add(t[i] as ArrayList<Int>) }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val itemView: View = LayoutInflater.from(parent.context)
@@ -50,18 +50,18 @@ class RecyclerAdapterPhotosList(private val names: ArrayList<String>) :
     @DelicateCoroutinesApi
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-
+names[position][0]
         Picasso.get().load(R.mipmap.s1)
-            .error(R.drawable.ic_launcher_foreground).into(holder.img1)
+            .error(names[position][0]).into(holder.img1)
    //     holder.img1!!.layoutParams.height   = holder.img1!!.width
 
         Log.i("TAG", "jnn: ${holder.img1!!.width}")
         Picasso.get().load(R.mipmap.s1)
-            .error(R.drawable.ic_launcher_foreground).into(holder.img2)
+            .error(names[position][0]).into(holder.img2)
     //    holder.img2!!.layoutParams.height   = holder.img2!!.width
 
         Picasso.get().load(R.mipmap.s1)
-            .error(R.drawable.ic_launcher_foreground).into(holder.img3)
+            .error(names[position][0]).into(holder.img3)
      //   holder.img3!!.layoutParams.height   = holder.img3!!.width
 
 

@@ -101,7 +101,7 @@ class ChatListFragment : Fragment() {
                     (recyclerView.layoutManager as LinearLayoutManager?)!!.findFirstVisibleItemPosition()
                 val currentLastVisible: Int =
                     (recyclerView.layoutManager as LinearLayoutManager?)!!.findLastVisibleItemPosition()
-                if (currentLastVisible == lastLoadedInListview) scrollLoadingChannel.onNext(lastLoadedImnListview)
+                if (currentLastVisible == lastLoadedInListview) scrollLoadingChannel.onNext(lastLoadedInListview)
 
                 firstVisibleInListview = currentFirstVisible
                 lastVisibleInListview = currentLastVisible
@@ -111,7 +111,7 @@ class ChatListFragment : Fragment() {
         //  recycleview для bottomSheet
         val recyclerView_bottom_sheet: RecyclerView = root.findViewById(R.id.recyclerView_bottom_sheet)
         recyclerView_bottom_sheet.layoutManager = LinearLayoutManager(context)
-        recyclerView_bottom_sheet.adapter = RecyclerAdapterPhotosList(fillList1() as java.util.ArrayList<String>)
+        recyclerView_bottom_sheet.adapter = RecyclerAdapterPhotosList(fillList1())
         val go_to_profile_btn : Button = root.findViewById(R.id.go_to_profilr_btn)
         go_to_profile_btn.setOnClickListener {
             Navigation.findNavController(root)
@@ -149,14 +149,18 @@ class ChatListFragment : Fragment() {
         return root
     }
 
-    private fun fillList1(): List<String> {
-        val dat = mutableListOf<String>()
-        (0..15).forEach { i ->
-            dat.add("ds")
+    private fun fillList1(): ArrayList<ArrayList<Int>> {
+        val dat = ArrayList<ArrayList<Int>>()
+        (0..5).forEach { i ->
+            val d = ArrayList<Int>()
+            d.add(R.drawable.ic_launcher_foreground)
+            d.add(R.drawable.ic_launcher_foreground)
+            d.add(R.drawable.ic_launcher_foreground)
+            dat.add(d)
         }
+        Log.i("TAG", "fillList1:sdf $dat ")
         return dat
     }
-
     @DelicateCoroutinesApi
     fun createStringSubscriber() {
         val toLoadingChannelSubscriber: io.reactivex.rxjava3.core.Observer<Int> = object :
