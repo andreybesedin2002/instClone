@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Project</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Log in</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome!"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="iAmless18">до 17 лет</string>
+    <string name="iAm18to22">от 18 до 21 года</string>
+    <string name="iAm22to30">от 22 до 25</string>
+    <string name="iAmMore30">от 26 до 35</string>
+    <string name="iAmMore36">старше 36</string>
+    <string name="youAreless18">до 17 лет</string>
+    <string name="youAre18to22">от 18 до 21 года</string>
+    <string name="youAre22to30">от 22 до 25</string>
+    <string name="youAreMore30">от 26 до 35</string>
+    <string name="youAreMore36">старше 36</string>
+    <string name="action_register">Sing up</string>
+</resources>

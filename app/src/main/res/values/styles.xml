@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="popwindow_anim_style">
+        <item name="android:windowEnterAnimation">@anim/anim_enter_bottom</item>
+        <item name="android:windowExitAnimation">@anim/anim_exit_bottom</item>
+
+    </style>
+    <style name="CustomTheme" parent="BottomDialogTheme">
+        <item name="bottom_sheet_extra_padding">4dp</item>
+        <item name="should_draw_under_status_bar">true</item>
+    </style>
+</resources>
