@@ -1,17 +1,21 @@
 package com.example.project.ui.search
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project.R
 import com.example.project.RecyclerAdapteSearch
-import com.example.project.RecyclerAdapterComments
 import java.util.*
+import androidx.lifecycle.Observer
+
 
 class SearchFragment : Fragment() {
 
@@ -27,32 +31,57 @@ class SearchFragment : Fragment() {
     ): View? {
         val root = inflater.inflate(R.layout.fragment_search, container, false)
 
-        val recyclerView_: RecyclerView = root.findViewById(R.id.recycler_search)
-        recyclerView_.layoutManager = LinearLayoutManager(context)
-        recyclerView_.adapter = RecyclerAdapteSearch(fillList())
 
         return root
     }
 
-    private fun fillList(): ArrayList<People> {
+    private fun fillList(e:String): ArrayList<People> {
         val people = ArrayList<People>()
         (0..5).forEach {
-            people.add(People("https://avatars.githubusercontent.com/u/7534778?v=4", "Andrey", "2001", "Moscow"))
+            people.add(
+                People(
+                    "https://avatars.githubusercontent.com/u/7534778?v=4",
+                    e,
+                    "2001",
+                    "Moscow"
+                )
+            )
         }
         return people
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
+        val search_input_field: EditText = view.findViewById(R.id.search_input_field)
+
+
+        val recyclerView_: RecyclerView = view.findViewById(R.id.recycler_search)
+        recyclerView_.layoutManager = LinearLayoutManager(context)
+        recyclerView_.adapter = RecyclerAdapteSearch(fillList("Andrey"))
+
+        viewModel.search_field.observe(viewLifecycleOwner,
+            { e->
+                recyclerView_.adapter = RecyclerAdapteSearch(fillList(e))
+            }
+        )
+
+        val afterTextChangedListener = object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) =
+                Unit
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) = Unit
+
+            override fun afterTextChanged(s: Editable) {
+                viewModel.searchDataChanged(
+                    search_input_field.text.toString()
+                )
+            }
+        }
+        search_input_field.addTextChangedListener(afterTextChangedListener)
+
 
     }
 
 }
 
-data class People(
-    val photo_url: String,
-    val name_user: String,
-    val year_user: String,
-    val location_user: String
-)

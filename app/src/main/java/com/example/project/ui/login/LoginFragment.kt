@@ -15,7 +15,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.project.MainAct
-import com.example.project.PopUpClass
+
 import com.example.project.R
 import kotlinx.android.synthetic.main.activity_main2.*
 import kotlinx.android.synthetic.main.fragment_item.view.*
@@ -137,13 +137,9 @@ class LoginFragment : Fragment() {
             })
 
         val afterTextChangedListener = object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-                // ignore
-            }
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) = Unit
 
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                // ignore
-            }
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) = Unit
 
             override fun afterTextChanged(s: Editable) {
                 loginViewModel.loginDataChanged(

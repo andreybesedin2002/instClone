@@ -54,7 +54,7 @@ class RecyclerAdapteSearch(private val names: ArrayList<People>) :
     @DelicateCoroutinesApi
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.largeTextView?.text = names[position].name_user + "  "+ names[position].location_user
+        holder.largeTextView?.text = names[position].year_user + "  "+ names[position].location_user
         holder.smallTextView?.text = names[position].name_user
 
         val tf_roboto = Typeface.createFromAsset(
