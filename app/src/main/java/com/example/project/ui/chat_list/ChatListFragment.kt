@@ -161,6 +161,7 @@ class ChatListFragment : Fragment() {
         Log.i("TAG", "fillList1:sdf $dat ")
         return dat
     }
+
     @DelicateCoroutinesApi
     fun createStringSubscriber() {
         val toLoadingChannelSubscriber: io.reactivex.rxjava3.core.Observer<Int> = object :

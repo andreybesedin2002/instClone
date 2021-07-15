@@ -56,13 +56,28 @@ tools:context=".ui.ProfileOtherUserFragment">
             android:text="San francisco, ca"
             android:textColor="@color/black"
             android:textSize="13sp"
-            app:layout_constraintBottom_toTopOf="@+id/button2"
+            app:layout_constraintBottom_toTopOf="@+id/follow_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/follow_btn"
+            android:layout_width="343dp"
+            android:layout_height="52dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/tegister_button"
+            android:text="Follow Jane"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textStyle="bold|italic"
+
+            app:layout_constraintBottom_toTopOf="@+id/message_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="HardcodedText" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button"
+            android:id="@+id/message_btn"
             android:layout_width="343dp"
             android:layout_height="52dp"
             android:layout_marginBottom="20dp"
@@ -76,21 +91,6 @@ tools:context=".ui.ProfileOtherUserFragment">
             tools:ignore="HardcodedText,MissingConstraints" />
 
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button2"
-            android:layout_width="343dp"
-            android:layout_height="52dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/tegister_button"
-            android:text="Follow Jane"
-            android:textAllCaps="true"
-            android:textColor="@color/white"
-            android:textStyle="bold|italic"
-
-            app:layout_constraintBottom_toTopOf="@+id/button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="HardcodedText" />
 
 
         <androidx.recyclerview.widget.RecyclerView

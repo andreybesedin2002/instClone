@@ -3,7 +3,7 @@ package com.example.project
 
 import android.util.Log
 import com.example.project.DB.Messages.Message
-import com.example.project.ui.ChatFragment
+import com.example.project.ui.MessageFragment
 import com.example.project.ui.chat_list.ChatListFragment
 import io.reactivex.rxjava3.core.Observable
 
@@ -22,8 +22,8 @@ class DataService {
             val arr: ArrayList<Message> = arrayListOf()
             (0..5).forEach { e ->
                 Log.i("TAG", "load message $e")
-                arr.add(ChatFragment.db.MessagesDao().getMessagesfromUserChat(1, 1, t+2*e ))
-                arr.add(ChatFragment.db.MessagesDao().getMessagesfromUserChat(1, 2, t+2*e+1 ))
+                arr.add(MessageFragment.db.MessagesDao().getMessagesfromUserChat(1, 1, t+2*e ))
+                arr.add(MessageFragment.db.MessagesDao().getMessagesfromUserChat(1, 2, t+2*e+1 ))
             }
             arr
         }.await()

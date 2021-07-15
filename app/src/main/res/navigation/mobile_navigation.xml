@@ -68,7 +68,7 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_message"
-        android:name="com.example.project.ui.ChatFragment"
+        android:name="com.example.project.ui.MessageFragment"
         android:label="dfghbjnkm"
         tools:layout="@layout/fragment_message" />
     <fragment
@@ -89,7 +89,11 @@
         android:id="@+id/navigation_other_profile"
         android:name="com.example.project.ui.ProfileOtherUserFragment"
         android:label="dfghbjnkm"
-        tools:layout="@layout/profile_other_user_fragment" />
+        tools:layout="@layout/profile_other_user_fragment" >
+        <action
+            android:id="@+id/action_navigation_other_profile_to_navigation_message"
+            app:destination="@id/navigation_message" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_search"

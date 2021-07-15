@@ -15,7 +15,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.room.Room
 import com.example.project.*
 import com.example.project.DB.AppDataBase
 import com.example.project.DB.Messages.Message
@@ -28,10 +27,10 @@ import kotlinx.android.synthetic.main.fragment_message.*
 import kotlinx.coroutines.*
 import java.util.ArrayList
 
-class ChatFragment : Fragment() {
+class MessageFragment : Fragment() {
 
     companion object {
-        fun newInstance() = ChatFragment()
+        fun newInstance() = MessageFragment()
         lateinit var InstanceView: View
         lateinit var InstanceVContext: Context
 
@@ -108,6 +107,10 @@ class ChatFragment : Fragment() {
          MainAct.toolbar.setNavigationIcon(R.drawable.ic_baseline_navigate_before_24)
 
 
+         val arg1Value : String? = arguments?.getString("arg1")
+         val arg2Value : Int? = arguments?.getInt("arg2")
+
+         Log.i("TAG", "onCreateView:  link $arg1Value , $arg2Value")
          InstanceView = root
          InstanceVContext = requireContext()    //создание recyclerView
          recyclerView_ = root.findViewById(R.id.recyclerView)
