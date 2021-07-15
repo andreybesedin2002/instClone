@@ -75,11 +75,11 @@ class LoginFragment : Fragment() {
         MainAct.toolbar.title =null
         toolbar_view_textview.text  = "Login"
         MainAct.toolbar.setNavigationIcon(R.drawable.ic_baseline_navigate_before_24)
-
-        val popupButton: Button = view.findViewById(R.id.buttonPopup)
-        popupButton.setOnClickListener {
-            PopUpClass.showPopupWindow(v)
-        }
+//
+//        val popupButton: Button = view.findViewById(R.id.buttonPopup)
+//        popupButton.setOnClickListener {
+//            PopUpClass.showPopupWindow(v)
+//        }
 
 //        MainAct.toolbar.visibility = View.GONE
 //       (activity as MainAct?)!!.setSupportActionBar(new_toolbar)

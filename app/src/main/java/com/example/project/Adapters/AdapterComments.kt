@@ -1,17 +1,16 @@
 package com.example.project
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project.DB.Comments.Comment
 import com.example.project.DB.Comments.ReplyComment
+import com.example.project.ui.search.People
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.coroutines.*

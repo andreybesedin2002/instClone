@@ -25,4 +25,10 @@
         android:layout_height="52dp" />
 
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_search"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="40dp"
+        />
 </LinearLayout>

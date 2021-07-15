@@ -13,10 +13,8 @@ import com.example.project.DB.Comments.Comment
 import com.example.project.MainAct
 import com.example.project.R
 import com.example.project.RecyclerAdapterComments
-import com.example.project.RecyclerAdapterPublications
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.ArrayList
 
