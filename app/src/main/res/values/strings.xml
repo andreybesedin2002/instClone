@@ -25,4 +25,6 @@
     <string name="youAreMore36">старше 36</string>
     <string name="action_register">Sing up</string>
     <string name="title_search">Search</string>
+    <string name="title_messages">messages</string>
+    <string name="my_profile">Profile</string>
 </resources>
