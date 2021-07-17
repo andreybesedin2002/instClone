@@ -1,11 +1,17 @@
 package com.example.project
 
 import android.annotation.SuppressLint
+import android.os.Build
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
+import androidx.annotation.RequiresApi
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project.DB.Messages.Message
 import com.example.project.ui.chat_list.ChatListFragment
@@ -46,6 +52,7 @@ class RecyclerAdapterPublications(private val names: ArrayList<String>) :
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     @DelicateCoroutinesApi
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
@@ -62,6 +69,11 @@ class RecyclerAdapterPublications(private val names: ArrayList<String>) :
         holder.img2?.setOnClickListener {
             Navigation.findNavController(holder.itemView)
                 .navigate(R.id.action_navigation_publications_to_navigation_comments)
+
+
+        }
+        holder.img3?.setOnClickListener {
+
 
 
         }

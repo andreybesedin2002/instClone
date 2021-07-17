@@ -48,7 +48,7 @@ public class PopUpClass {
             @Override
             public void onDismiss() {
                 clearDim(root);
-                Log.i("TAG", "onDismiss: ");
+
             }
         });
 

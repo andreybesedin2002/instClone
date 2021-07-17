@@ -58,6 +58,7 @@ class ChatListFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_chat_list, container, false)
 
         val v: View = layoutInflater.inflate(R.layout.activity_main_toolbar_mine_view, null)
+        //toolbar
         val  toolbar_view_textview: TextView = v.findViewById(R.id.textview_toolbar)
         MainAct.toolbar.removeAllViews()
         MainAct.toolbar.addView(v)
@@ -84,7 +85,7 @@ class ChatListFragment : Fragment() {
         val dividerItemDecoration = DividerItemDecoration(context, RecyclerView.VERTICAL)
         dividerItemDecoration.setDrawable(resources.getDrawable(R.drawable.divider_drawable))
         recyclerView_.addItemDecoration(dividerItemDecoration)
-
+        //scrool to position 0
         recyclerView_.scrollToPosition(0)
 
         firstVisibleInListview =
@@ -113,6 +114,7 @@ class ChatListFragment : Fragment() {
         recyclerView_bottom_sheet.layoutManager = LinearLayoutManager(context)
         recyclerView_bottom_sheet.adapter = RecyclerAdapterPhotosList(fillList1())
         val go_to_profile_btn : Button = root.findViewById(R.id.go_to_profilr_btn)
+
         go_to_profile_btn.setOnClickListener {
             Navigation.findNavController(root)
                 .navigate(R.id.action_navigation_dashboard_to_navigation_other_profile)

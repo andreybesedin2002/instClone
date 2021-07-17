@@ -5,15 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
-import com.example.project.DB.Messages.Message
+import com.example.project.Objects.Like
 import com.example.project.ui.chat_list.ChatListFragment
+import com.example.project.ui.chat_list.ChatListFragment.Companion.bottomSheetBehavior
+import com.example.project.ui.home.HomeFragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.coroutines.*
-import java.util.*
 import kotlin.collections.ArrayList
 
 
@@ -23,16 +25,20 @@ class RecyclerAdapterMainPublications(private val names: ArrayList<String>) :
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var img: ImageView? = null
         var img_publication: ImageView? = null
-        var img1: ImageView? = null
-        var img2: ImageView? = null
-        var img3: ImageView? = null
+        var like: ImageView? = null
+        var like_text: TextView? = null
+        var comment: ImageView? = null
+        var share: ImageView? = null
+
+        var like_publication: Like? = null
         init {
             img = itemView.findViewById(R.id.img)
             img_publication = itemView.findViewById(R.id.img_publication)
-            img1 = itemView.findViewById(R.id.img1)
-            img2 = itemView.findViewById(R.id.img2)
-            img3 = itemView.findViewById(R.id.img3)
-
+            like = itemView.findViewById(R.id.like)
+            like_text = itemView.findViewById(R.id.like_text)
+            comment = itemView.findViewById(R.id.comment)
+            share = itemView.findViewById(R.id.share)
+            like_publication = Like(img = like!!)
         }
     }
 
@@ -44,7 +50,11 @@ class RecyclerAdapterMainPublications(private val names: ArrayList<String>) :
 
         return MyViewHolder(itemView)
     }
+    companion object {
 
+        var isActive: Boolean = true
+
+    }
 
     @DelicateCoroutinesApi
     @SuppressLint("SetTextI18n")
@@ -59,10 +69,21 @@ class RecyclerAdapterMainPublications(private val names: ArrayList<String>) :
             .resize(300,300)
             .into(holder.img_publication)
 
-        holder.img2?.setOnClickListener {
+        holder.like_publication!!.setOnClickListener {
+            holder.like_text!!.text = (5).toString()
+        }
+
+        holder.comment?.setOnClickListener {
             Navigation.findNavController(holder.itemView)
                 .navigate(R.id.action_navigation_publications_to_navigation_comments)
 
+
+        }
+
+        holder.share?.setOnClickListener {
+            HomeFragment.bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+            HomeFragment.back_dim_layout.visibility = View.VISIBLE
+            isActive = false
 
         }
     }

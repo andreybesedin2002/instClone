@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project.DB.Comments.Comment
 import com.example.project.DB.Comments.ReplyComment
-import com.example.project.ui.search.People
+import com.example.project.Objects.Like
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.coroutines.*
@@ -23,7 +23,7 @@ class RecyclerAdapterComments(private val names: ArrayList<Comment>) :
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var num_likes: TextView? = null
         var likes: ImageView? = null
-
+        var like_comment: Like? = null
         var img: ImageView? = null
         var username: TextView? = null
         var time: TextView? = null
@@ -36,6 +36,8 @@ class RecyclerAdapterComments(private val names: ArrayList<Comment>) :
             num_likes = itemView.findViewById(R.id.num_likes)
             likes = itemView.findViewById(R.id.likes)
             img = itemView.findViewById(R.id.img_user)
+            like_comment = Like(img = likes!!)
+
         }
     }
 
@@ -63,10 +65,11 @@ class RecyclerAdapterComments(private val names: ArrayList<Comment>) :
         holder.num_likes!!.text = names[position].likes.toString()
         holder.data_comment!!.text = names[position].dataComment
 
-        holder.likes!!.setOnClickListener {
-            names[position].likes = names[position].likes + 1
 
+        holder.like_comment!!.setOnClickListener {
+            names[position].likes = names[position].likes + 1
             holder.num_likes!!.text = names[position].likes.toString()
+            holder.likes!!.setBackgroundResource(R.mipmap.ic_launcher_foreground__)
         }
 
         val recyclerView_: RecyclerView = holder.itemView.findViewById(R.id.recycler_reply)
