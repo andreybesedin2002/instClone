@@ -35,7 +35,7 @@ class RoundedCornersTransform(recyclerAdapterChatList: RecyclerAdapterPhotosList
     }
 
     override fun key(): String {
-        return "rounded_corners";
+        return "rounded_corners"
     }
 
 }

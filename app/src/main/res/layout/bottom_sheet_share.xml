@@ -7,7 +7,7 @@
     android:layout_gravity="bottom"
     android:background="@drawable/bottom_sheet_background"
     android:elevation="10dp"
-    app:behavior_expandedOffset="500dp"
+    app:behavior_expandedOffset="450dp"
     app:behavior_fitToContents="false"
     app:behavior_hideable="true"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
@@ -26,9 +26,7 @@
                 android:id="@+id/recyclerView_bottom_sheet_share"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                android:layout_marginTop="40dp"/>
 
             <androidx.appcompat.widget.AppCompatButton
 

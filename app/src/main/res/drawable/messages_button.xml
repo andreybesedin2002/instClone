@@ -6,8 +6,7 @@
     <!--    <corners-->
     <!--        android:radius="1dp"-->
     <!--        />-->
-    <solid android:color="@color/white"
-        />
+
     <stroke
         android:color="@color/black"
         android:width="3dip" />

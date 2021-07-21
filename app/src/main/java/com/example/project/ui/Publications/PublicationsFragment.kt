@@ -1,4 +1,4 @@
-package com.example.project.ui
+package com.example.project.ui.Publications
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -8,17 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.project.DB.Messages.Message
 import com.example.project.R
 import com.example.project.RecyclerAdapterPublications
 
-class BlankFragment : Fragment() {
+class PublicationsFragment : Fragment() {
 
     companion object {
-        fun newInstance() = BlankFragment()
+        fun newInstance() = PublicationsFragment()
     }
 
-    private lateinit var viewModel: BlankViewModel
+    private lateinit var viewModel: PublicationsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,7 +32,7 @@ class BlankFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(BlankViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(PublicationsViewModel::class.java)
 
     }
 

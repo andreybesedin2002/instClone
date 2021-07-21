@@ -1,4 +1,4 @@
-package com.example.project.ui
+package com.example.project.ui.Comments
 
 import androidx.lifecycle.ViewModel
 

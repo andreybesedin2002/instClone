@@ -1,27 +1,21 @@
-package com.example.project.ui.home
+package com.example.project.ui.MainPublications
 
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.RelativeLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.project.MainAct
-import com.example.project.R
-import com.example.project.RecyclerAdapterMainPublications
-import com.example.project.RecyclerAdapterPhotosList
-import com.example.project.ui.chat_list.ChatListFragment
+import com.example.project.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 
-class HomeFragment : Fragment() {
+class MainPublicationsFragment : Fragment() {
 
     companion object {
         lateinit var bottomSheetView: ConstraintLayout
@@ -31,7 +25,7 @@ class HomeFragment : Fragment() {
 
 
     private lateinit var recyclerView_: RecyclerView
-    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var homeViewModel: MainPublicationsViewModel
 
 
 
@@ -41,7 +35,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
+            ViewModelProvider(this).get(MainPublicationsViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         MainAct.navView.visibility = View.VISIBLE
 
@@ -76,12 +70,18 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         //создание затемнение при появлении bottomSheetView
-        back_dim_layout = view.findViewById(R.id.bac_dim_layout)
+        back_dim_layout = view.findViewById(R.id.bac_dim_layout_share)
         back_dim_layout.setOnClickListener {
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
             back_dim_layout.visibility = View.GONE
             RecyclerAdapterPhotosList.isActive = true
         }
+        //recycleview for bottomSheet
+
+        val recyclerView_bottom_sheet: RecyclerView = view.findViewById(R.id.recyclerView_bottom_sheet_share)
+        recyclerView_bottom_sheet.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,true)
+        recyclerView_bottom_sheet.adapter = RecyclerAdapterShare(fillList() as java.util.ArrayList<String>)
+
 
         // bottomSheet
         bottomSheetView = view.findViewById(R.id.bottom_sheet_share_)
@@ -100,11 +100,7 @@ class HomeFragment : Fragment() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) = Unit
         }
         bottomSheetBehavior.addBottomSheetCallback(bottomSheetCallback)
-        //recycleview for bottomSheet
-        val recyclerView_bottom_sheet: RecyclerView = view.findViewById(R.id.recyclerView_bottom_sheet)
-        recyclerView_bottom_sheet.layoutManager = LinearLayoutManager(context)
-        recyclerView_bottom_sheet.adapter = RecyclerAdapterPhotosList(fillList1())
-        val go_to_profile_btn : Button = view.findViewById(R.id.go_to_profilr_btn)
+
 
 
 

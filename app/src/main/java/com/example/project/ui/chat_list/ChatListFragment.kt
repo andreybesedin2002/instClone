@@ -113,12 +113,10 @@ class ChatListFragment : Fragment() {
         val recyclerView_bottom_sheet: RecyclerView = root.findViewById(R.id.recyclerView_bottom_sheet)
         recyclerView_bottom_sheet.layoutManager = LinearLayoutManager(context)
         recyclerView_bottom_sheet.adapter = RecyclerAdapterPhotosList(fillList1())
+
         val go_to_profile_btn : Button = root.findViewById(R.id.go_to_profilr_btn)
-
         go_to_profile_btn.setOnClickListener {
-            Navigation.findNavController(root)
-                .navigate(R.id.action_navigation_dashboard_to_navigation_other_profile)
-
+            NavigationController().goToFragment(R.id.action_navigation_dashboard_to_navigation_other_profile,root)
 
         }
         //action_navigation_dashboard_to_navigation_other_profile
@@ -199,7 +197,7 @@ class ChatListFragment : Fragment() {
                 ad.addNewRandomItems(t)
                 ad.notifyItemInserted(ad.itemCount - 9)
                 lastLoadedInListview += 10
-                ad.notifyDataSetChanged();
+                ad.notifyDataSetChanged()
                 createStringSubscriber()
             }
 

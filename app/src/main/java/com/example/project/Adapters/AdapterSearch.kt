@@ -12,6 +12,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project.DB.Messages.Message
+import com.example.project.Objects.Like
 import com.example.project.ui.chat_list.ChatListFragment
 import com.example.project.ui.search.People
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -31,6 +32,7 @@ class RecyclerAdapteSearch(private val names: ArrayList<People>) :
         var img: ImageView? = null
         var containerView: ConstraintLayout? = null
         //  var img_person: ImageView? = null
+
 
         init {
             img = itemView.findViewById(R.id.img)

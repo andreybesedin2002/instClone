@@ -1,4 +1,4 @@
-package com.example.project
+package com.example.project.ui.LoginOrRegister
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import androidx.navigation.fragment.findNavController
+import com.example.project.R
 
 class LoginOrRegisterFragment : Fragment() {
 

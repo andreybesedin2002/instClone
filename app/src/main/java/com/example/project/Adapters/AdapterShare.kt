@@ -7,45 +7,38 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
-import com.example.project.DB.Messages.Message
-import com.example.project.ui.chat_list.ChatListFragment
-import com.example.project.ui.search.People
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.coroutines.DelicateCoroutinesApi
 import java.util.*
 
 
-class RecyclerAdapteSearch(private val names: ArrayList<People>) :
-    RecyclerView.Adapter<RecyclerAdapteSearch.MyViewHolder>() {
+class RecyclerAdapterShare(private val names: ArrayList<String>) :
+    RecyclerView.Adapter<RecyclerAdapterShare.MyViewHolder>() {
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var largeTextView: TextView? = null
-        var smallTextView: TextView? = null
+        var nameTextView: TextView? = null
+
         var img: ImageView? = null
-        var containerView: ConstraintLayout? = null
-        //  var img_person: ImageView? = null
+        var img_selected: ImageView? = null
+        var containerView: LinearLayout? = null
 
         init {
             img = itemView.findViewById(R.id.img)
-            largeTextView = itemView.findViewById(R.id.textViewLarge)
-            smallTextView = itemView.findViewById(R.id.textViewSmall)
-            containerView = itemView.findViewById(R.id.t)
+            img_selected = itemView.findViewById(R.id.img_select)
+            nameTextView = itemView.findViewById(R.id.nameTextView)
+            containerView = itemView.findViewById(R.id.lin_layout_share)
         }
 
     }
 
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val itemView: View = LayoutInflater.from(parent.context)
-            .inflate(R.layout.recycleview_item_search, parent, false)
+            .inflate(R.layout.recycleview_item_share, parent, false)
 
         return MyViewHolder(itemView)
     }
@@ -54,33 +47,44 @@ class RecyclerAdapteSearch(private val names: ArrayList<People>) :
     @DelicateCoroutinesApi
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.largeTextView?.text = names[position].year_user + "  "+ names[position].location_user
-        holder.smallTextView?.text = names[position].name_user
-
-        val tf_roboto = Typeface.createFromAsset(
-            holder.itemView.context.assets,
-            "fronts/Roboto-Black.ttf"
-        )
 
 
         val tf = Typeface.createFromAsset(
             holder.itemView.context.assets,
             "fronts/Comfortaa-VariableFont_wght.ttf"
         )
-        holder.largeTextView!!.typeface = tf
-        holder.smallTextView!!.typeface = tf_roboto
-
+        holder.nameTextView!!.typeface = tf
+        holder.img_selected!!.visibility = View.INVISIBLE
         Picasso.get()
-            .load(names[position].photo_url)
+            .load("https://c.wallhere.com/photos/68/15/1600x1200_px_animal_cute_dog_dogs_Frendly_Pet-1642413.jpg!d")
             .error(R.drawable.ic_launcher_foreground)
             .transform(CropCircleTransformation())
             .into(holder.img)
 
+        holder.img!!.setOnClickListener {
+            //  holder.img_selected!!.visibility = View.VISIBLE
+            Log.i(
+                "TAG",
+                "_______onBindViewHolder: click ${holder.img_selected!!.visibility}${holder.img_selected!!.visibility == 8} "
+            )
+            if (holder.img_selected!!.visibility == 8) {
+                holder.img_selected!!.visibility = View.VISIBLE
+            }
+            if (holder.img_selected!!.visibility == 0) {
+                holder.img_selected!!.visibility = View.INVISIBLE
+            }
 
-        holder.containerView!!.setOnClickListener {
-            Navigation.findNavController(holder.itemView)
-                .navigate(R.id.action_navigation_dashboard_to_navigation_message)
         }
+        holder.containerView!!.setOnClickListener {
+            Log.i("TAG", "onBindViewHolder: click")
+//                if (holder.img_selected!!.visibility == View.GONE) {
+//                    holder.img_selected!!.visibility = View.VISIBLE
+//                }
+//                if (holder.img_selected!!.visibility == View.VISIBLE) {
+//                    holder.img_selected!!.visibility = View.GONE
+//                }
+        }
+
     }
 
     override fun getItemCount(): Int = names.size

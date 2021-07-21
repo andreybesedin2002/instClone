@@ -8,19 +8,20 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginBottom="5dp"
         android:layout_weight="1"
         tools:listitem="@layout/recyclerview_item_r" />
 
     <LinearLayout
         android:id="@+id/message_lable"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_gravity="end"
         android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginBottom="10dp"
         android:layout_weight="0.0"
 
@@ -45,10 +46,10 @@
 
 
         <Button
-
+        android:background="@drawable/ic_baseline_send_24"
             android:id="@+id/button2"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="end|center_vertical"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="30dp"

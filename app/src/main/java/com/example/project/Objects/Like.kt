@@ -15,7 +15,5 @@ class Like (val img: ImageView) {
 fun changeView(){
     img.setBackgroundResource(R.drawable.ic_baseline_favorite_24)
 }
-    init {
 
-    }
 }

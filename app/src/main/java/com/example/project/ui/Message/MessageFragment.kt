@@ -1,4 +1,4 @@
-package com.example.project.ui
+package com.example.project.ui.Message
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -12,6 +12,9 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,7 +30,7 @@ import kotlinx.android.synthetic.main.fragment_message.*
 import kotlinx.coroutines.*
 import java.util.ArrayList
 
-class MessageFragment : Fragment() {
+class MessageFragment : Fragment() ,LifecycleEventObserver{
 
     companion object {
         fun newInstance() = MessageFragment()
@@ -46,7 +49,7 @@ class MessageFragment : Fragment() {
 
             val mgScrollView =
                 InstanceView.findViewById<NestedScrollView>(R.id.dsfg) as NestedScrollView
-            mgScrollView.isSmoothScrollingEnabled = true;
+            mgScrollView.isSmoothScrollingEnabled = true
         }
         private fun fillList1(): ArrayList<ArrayList<Int>> {
             val dat = ArrayList<ArrayList<Int>>()
@@ -72,7 +75,7 @@ class MessageFragment : Fragment() {
 
     lateinit var recyclerView_: RecyclerView
 
-    private lateinit var viewModel: ChatViewModel
+    private lateinit var viewModel: MessageViewModel
 
     override fun onResume() {
         super.onResume()
@@ -118,9 +121,9 @@ class MessageFragment : Fragment() {
          recyclerView_.adapter = CustomRecyclerAdapter(fillList() as ArrayList<Message>)
 
 
-         (recyclerView_.layoutManager as LinearLayoutManager).reverseLayout = true;
-        (recyclerView_.layoutManager as LinearLayoutManager).stackFromEnd = true;
-        recyclerView_.scrollToPosition(0)
+         (recyclerView_.layoutManager as LinearLayoutManager).reverseLayout = true
+         (recyclerView_.layoutManager as LinearLayoutManager).stackFromEnd = true
+         recyclerView_.scrollToPosition(0)
 
         firstVisibleInListview =
             (recyclerView_.layoutManager as LinearLayoutManager?)!!.findFirstVisibleItemPosition()
@@ -161,9 +164,6 @@ class MessageFragment : Fragment() {
                 lastVisibleInListview = currentLastVisible
             }
 
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-            }
         })
 
         createStringSubscriber()
@@ -220,7 +220,7 @@ class MessageFragment : Fragment() {
                 ad.addMessages(t)
                 ad.notifyItemInserted(ad.itemCount - 9)
                 lastLoadedInListview += 10
-                ad.notifyDataSetChanged();
+                ad.notifyDataSetChanged()
                 createStringSubscriber()
             }
 
@@ -259,8 +259,12 @@ class MessageFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(ChatViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(MessageViewModel::class.java)
         // TODO: Use the ViewModel
+    }
+
+    override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
+        Log.i("TAG", "onStateChanged: to $event  $source ")
     }
 
 }

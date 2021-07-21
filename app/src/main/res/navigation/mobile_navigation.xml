@@ -7,9 +7,13 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.project.ui.home.HomeFragment"
+        android:name="com.example.project.ui.MainPublications.MainPublicationsFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_comments"
+            app:destination="@id/navigation_comments" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_register"
         android:name="com.example.project.ui.login.RegisterFragment"
@@ -47,7 +51,7 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_loginOrRegister"
-        android:name="com.example.project.LoginOrRegisterFragment"
+        android:name="com.example.project.ui.LoginOrRegister.LoginOrRegisterFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/login_or_register_fragment" >
         <action
@@ -59,21 +63,21 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.project.ui.notifications.NotificationsFragment"
+        android:name="com.example.project.ui.profile.ProfileFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" >
+        tools:layout="@layout/fragment_profile" >
         <action
             android:id="@+id/action_navigation_notifications_to_navigation_publications"
             app:destination="@id/navigation_publications" />
     </fragment>
     <fragment
         android:id="@+id/navigation_message"
-        android:name="com.example.project.ui.MessageFragment"
+        android:name="com.example.project.ui.Message.MessageFragment"
         android:label="dfghbjnkm"
         tools:layout="@layout/fragment_message" />
     <fragment
         android:id="@+id/navigation_publications"
-        android:name="com.example.project.ui.BlankFragment"
+        android:name="com.example.project.ui.Publications.PublicationsFragment"
         android:label="dfghbjnkm"
         tools:layout="@layout/fragmet_publications" >
         <action
@@ -82,12 +86,12 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_comments"
-        android:name="com.example.project.ui.CommentsFragment"
+        android:name="com.example.project.ui.Comments.CommentsFragment"
         android:label="dfghbjnkm"
         tools:layout="@layout/fragment_comments" />
     <fragment
         android:id="@+id/navigation_other_profile"
-        android:name="com.example.project.ui.ProfileOtherUserFragment"
+        android:name="com.example.project.ui.sersProfile.ProfileOtherUserFragment"
         android:label="dfghbjnkm"
         tools:layout="@layout/profile_other_user_fragment" >
         <action
@@ -101,5 +105,8 @@
         android:label="dfghbjnkm"
         tools:layout="@layout/fragment_search" >
 
+        <action
+            android:id="@+id/action_navigation_search_to_navigation_other_profile"
+            app:destination="@id/navigation_other_profile" />
     </fragment>
 </navigation>

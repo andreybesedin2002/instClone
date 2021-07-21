@@ -1,4 +1,4 @@
-package com.example.project.ui
+package com.example.project.ui.sersProfile
 
 import android.os.Bundle
 import android.util.Log

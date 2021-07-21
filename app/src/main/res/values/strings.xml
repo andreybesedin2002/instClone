@@ -27,4 +27,8 @@
     <string name="title_search">Search</string>
     <string name="title_messages">messages</string>
     <string name="my_profile">Profile</string>
+    <string name="change_main_photo">change main photo</string>
+    <string name="delete_photo">delete photo</string>
+    <string name="show_photo">show photo</string>
+    <string name="change_profile_data">change profile data</string>
 </resources>

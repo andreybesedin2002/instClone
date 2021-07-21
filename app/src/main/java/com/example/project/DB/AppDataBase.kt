@@ -13,7 +13,7 @@ import com.example.project.DB.User.User
 import com.example.project.DB.User.UsersDao
 
 @Database(entities = [Message::class,Comment::class,ReplyComment::class, User::class,AuthData::class], version =5)
-public abstract class AppDataBase : RoomDatabase() {
+abstract class AppDataBase : RoomDatabase() {
 
     abstract fun MessagesDao(): MessagesDao
     abstract fun CommentDao(): CommentsDao

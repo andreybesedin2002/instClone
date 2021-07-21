@@ -11,13 +11,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.project.DB.Comments.Comment
 import com.example.project.DB.Comments.ReplyComment
 import com.example.project.Objects.Like
+import com.example.project.ui.Comments.CommentsFragment
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.coroutines.*
 import java.util.*
 
 
-class RecyclerAdapterComments(private val names: ArrayList<Comment>) :
+class RecyclerAdapterComments(private val names: ArrayList<Comment>,private var parentFragment:CommentsFragment) :
     RecyclerView.Adapter<RecyclerAdapterComments.MyViewHolder>() {
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -71,23 +72,16 @@ class RecyclerAdapterComments(private val names: ArrayList<Comment>) :
             holder.num_likes!!.text = names[position].likes.toString()
             holder.likes!!.setBackgroundResource(R.mipmap.ic_launcher_foreground__)
         }
-
+holder.data_comment!!.setOnClickListener{
+    parentFragment.setDataToEditText(names[position].dataComment+", ")
+}
         val recyclerView_: RecyclerView = holder.itemView.findViewById(R.id.recycler_reply)
         recyclerView_.layoutManager = LinearLayoutManager(holder.itemView.context)
         recyclerView_.adapter = RecyclerAdapterReplyComments(fillList() as ArrayList<ReplyComment>)
 
-        //     names[position].replyComments.forEach
     }
 
     private fun fillList(): List<ReplyComment> {
-//        val l = runBlocking {
-//            val list_ =  GlobalScope.async {
-//
-//                return@async MainAct.getInstance(requireContext()).CommentDao().getAllCommetsPost()
-//
-//            }.await()
-//            return@runBlocking list_
-//        }
         val dat = mutableListOf<ReplyComment>()
         dat.add(ReplyComment(1, 1, 1, "reply1", 5))
         dat.add(ReplyComment(2, 1, 1, "reply2", 5))

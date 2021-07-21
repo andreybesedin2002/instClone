@@ -9,9 +9,7 @@ import android.widget.TextView
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project.Objects.Like
-import com.example.project.ui.chat_list.ChatListFragment
-import com.example.project.ui.chat_list.ChatListFragment.Companion.bottomSheetBehavior
-import com.example.project.ui.home.HomeFragment
+import com.example.project.ui.MainPublications.MainPublicationsFragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
@@ -74,15 +72,12 @@ class RecyclerAdapterMainPublications(private val names: ArrayList<String>) :
         }
 
         holder.comment?.setOnClickListener {
-            Navigation.findNavController(holder.itemView)
-                .navigate(R.id.action_navigation_publications_to_navigation_comments)
-
-
+        NavigationController().goToFragment(R.id.action_navigation_home_to_navigation_comments,holder.itemView)
         }
 
         holder.share?.setOnClickListener {
-            HomeFragment.bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-            HomeFragment.back_dim_layout.visibility = View.VISIBLE
+            MainPublicationsFragment.bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+            MainPublicationsFragment.back_dim_layout.visibility = View.VISIBLE
             isActive = false
 
         }

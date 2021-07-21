@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="20dp"
     android:orientation="vertical"
-    tools:context=".ui.CommentsFragment">
+    tools:context=".ui.Comments.CommentsFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

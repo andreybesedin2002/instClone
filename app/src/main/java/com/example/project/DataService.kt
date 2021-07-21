@@ -3,7 +3,7 @@ package com.example.project
 
 import android.util.Log
 import com.example.project.DB.Messages.Message
-import com.example.project.ui.MessageFragment
+import com.example.project.ui.Message.MessageFragment
 import com.example.project.ui.chat_list.ChatListFragment
 import io.reactivex.rxjava3.core.Observable
 
