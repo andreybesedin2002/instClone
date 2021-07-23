@@ -10,11 +10,9 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ProgressBar
-import android.widget.Toast
+import android.widget.*
 import androidx.navigation.fragment.findNavController
+import com.example.project.MainAct
 
 import com.example.project.R
 
@@ -34,6 +32,10 @@ class RegisterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         loginViewModel = ViewModelProvider(this, RegisterViewModelFactory())
             .get(RegisterViewModel::class.java)
+
+//        MainAct.toolbar.title =null
+//        val  textviewToolbar: TextView =  requireActivity().findViewById(R.id.toolbar_title)
+//        textviewToolbar.text  = "Register"
 
         val usernameEditText = view.findViewById<EditText>(R.id.username_register)
         val passwordEditText = view.findViewById<EditText>(R.id.password_register)

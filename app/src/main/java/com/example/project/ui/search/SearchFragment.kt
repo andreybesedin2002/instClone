@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +16,7 @@ import com.example.project.R
 import com.example.project.RecyclerAdapteSearch
 import java.util.*
 import androidx.lifecycle.Observer
+import com.example.project.MainAct
 
 
 class SearchFragment : Fragment() {
@@ -53,8 +55,12 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
-        val search_input_field: EditText = view.findViewById(R.id.search_input_field)
 
+//        MainAct.toolbar.title =null
+//        val  textviewToolbar: TextView =  requireActivity().findViewById(R.id.toolbar_title)
+//        textviewToolbar.text  = "Research"
+
+        val search_input_field: EditText = view.findViewById(R.id.search_input_field)
 
         val recyclerView_: RecyclerView = view.findViewById(R.id.recycler_search)
         recyclerView_.layoutManager = LinearLayoutManager(context)

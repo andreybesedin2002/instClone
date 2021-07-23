@@ -1,5 +1,6 @@
 package com.example.project.ui.login
 
+import android.annotation.SuppressLint
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Editable
@@ -33,81 +34,36 @@ class LoginFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_login, container, false)
     }
 
+    @SuppressLint("InflateParams")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
             .get(LoginViewModel::class.java)
-      //  val  toolbar_view = layoutInflater.inflate(R.layout.shit, null)
-       // val toolbar: Toolbar = toolbar_view.findViewById(R.id.toolbar_)
 
-
-        //(activity as MainAct).supportActionBar?.hide()
-//
-     //////   (activity as MainAct).setSupportActionBar(toolbar_)
-//        NavigationUI.setupWithNavController(toolbar_,
-//            MainAct.navController,
-//            MainAct.appBarConfiguration
-//        )
-
-        /*      (context as Activity).window.decorView.apply {
-                  // Hide both the navigation bar and the status bar.
-                  // SYSTEM_UI_FLAG_FULLSCREEN is only available on Android 4.1 and higher, but as
-                  // a general rule, you should design your app to hide the status bar whenever you
-                  // hide the navigation bar.
-      //            systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-              }
-        */
-       // MainAct.toolbar.collapseActionView()
-        //(activity as MainAct?)!!.supportActionBar!!.hide()
-
-       // val viewContent = layoutInflater.inflate(R.layout.shit,null)
-
-        //        val new_toolbar: Toolbar =  view.findViewById(R.id.toolbar_)
-          //   MainAct.toolbar.collapseActionView()
-         // MainAct.toolbar = view.findViewById(R.id.toolbar_)
-      //  MainAct.toolbar.removeAllViews()
-        //MainAct.toolbar
-       // MainAct.toolbar.addView(layoutInflater.inflate(R.layout.shit,null))
         val v: View = layoutInflater.inflate(R.layout.activity_main_toolbar_mine_view, null)
-        val  toolbar_view_textview:TextView = v.findViewById(R.id.textview_toolbar)
-        MainAct.toolbar.removeAllViews()
-        MainAct.toolbar.addView(v)
-        MainAct.toolbar.title =null
-        toolbar_view_textview.text  = "Login"
-        MainAct.toolbar.setNavigationIcon(R.drawable.ic_baseline_navigate_before_24)
+
+//        val  textviewToolbar:TextView = v.findViewById(R.id.textview_toolbar)
+//        MainAct.toolbar.removeAllViews()
+//        MainAct.toolbar.addView(v)
+//        MainAct.toolbar.title =null
+//        textviewToolbar.text  = "Login"
+//MainAct.toolbar.title ="jnjnj"
+//        MainAct.toolbar.title =null
+//        val  textviewToolbar: TextView =  requireActivity().findViewById(R.id.toolbar_title)
+//        textviewToolbar.text  = "Login"
 //
-//        val popupButton: Button = view.findViewById(R.id.buttonPopup)
-//        popupButton.setOnClickListener {
-//            PopUpClass.showPopupWindow(v)
-//        }
-
-//        MainAct.toolbar.visibility = View.GONE
-//       (activity as MainAct?)!!.setSupportActionBar(new_toolbar)
-
-       // val viewContent = layoutInflater.inflate(R.layout.shit, MainAct.toolbar)
-     //   (activity as MainAct?)!!.setSupportActionBar(MainAct.toolbar)
-    //    MainAct.toolbar.addView(viewContent)
-
-        //       val new_toolbar: Toolbar = viewContent.findViewById(R.id.toolbar_)
-        //  Log.i("TAG", "onViewCreated: "+  )
-        //(activity as MainAct?)!!.actionBar!!.setCustomView(R.layout.shit)
-        //    MainAct.toolbar.addView(viewContent)
-//
-//        (activity as MainAct?)!!.setSupportActionBar(toolbar)
-//        myToolbar.addView(viewContent)
-//       MainAct.toolbar.addView(assd)
+//        MainAct.toolbar.setNavigationIcon(R.drawable.ic_baseline_navigate_before_24)
 
         val usernameEditText = view.findViewById<EditText>(R.id.username)
-
         val passwordEditText = view.findViewById<EditText>(R.id.password)
-        val loginButton = view.findViewById<Button>(R.id.login)
+        val loginButton = view.findViewById<Button>(R.id.loginBtn)
         val loadingProgressBar = view.findViewById<ProgressBar>(R.id.loading)
 
         val tf = Typeface.createFromAsset(
             requireContext().assets,
             "fronts/Comfortaa-VariableFont_wght.ttf"
         )
-        val txt2 = view.findViewById<TextView>(R.id.textView)
+        val txt2 = view.findViewById<TextView>(R.id.LoginTV)
         txt2.typeface = tf
 
         loginViewModel.loginFormState.observe(viewLifecycleOwner,
@@ -168,8 +124,6 @@ class LoginFragment : Fragment() {
     }
 
     private fun updateUiWithUser() {
-     //   val welcome = getString(R.string.welcome) + model.displayName
-        // TODO : initiate successful logged in experience
       findNavController().navigate(R.id.action_navigation_login_to_navigation_home2)
     }
 

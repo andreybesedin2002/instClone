@@ -4,45 +4,43 @@
     android:id="@+id/bottomSheet"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:behavior_hideable="true"
-    android:elevation="10dp"
-    app:behavior_fitToContents="false"
-    app:behavior_expandedOffset= "200dp"
     android:background="@drawable/bottom_sheet_background"
+    android:elevation="10dp"
+    app:behavior_expandedOffset="200dp"
+    app:behavior_fitToContents="false"
+    app:behavior_hideable="true"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
     <androidx.core.widget.NestedScrollView
-        android:id="@+id/dsfg"
+        android:id="@+id/nested_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <androidx.appcompat.widget.AppCompatButton
 
-                android:layout_marginTop="50dp"
-                android:layout_marginBottom="30dp"
-                android:layout_gravity="center_horizontal"
-                android:id="@+id/go_to_profilr_btn"
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/go_to_profile_btn"
                 android:layout_width="243dp"
                 android:layout_height="52dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="50dp"
+                android:layout_marginBottom="30dp"
                 android:background="@drawable/tegister_button"
                 android:text="Go to profile"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
-                android:textStyle="bold|italic"
-                />
+                android:textStyle="bold|italic" />
 
             <androidx.recyclerview.widget.RecyclerView
-
-            android:id="@+id/recyclerView_bottom_sheet"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-             />
+                android:id="@+id/recyclerView_bottom_sheet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

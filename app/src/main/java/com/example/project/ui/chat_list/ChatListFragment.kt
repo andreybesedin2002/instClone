@@ -13,11 +13,9 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.room.Room
 import com.example.project.*
 import com.example.project.DB.AppDataBase
 import com.example.project.DB.Messages.Message
@@ -50,22 +48,27 @@ class ChatListFragment : Fragment() {
     var scrollLoadingChannel: PublishSubject<Int> = PublishSubject.create()
     lateinit var recyclerView_: RecyclerView
 
+    @DelicateCoroutinesApi
     @SuppressLint("UseCompatLoadingForDrawables", "ResourceAsColor")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         chatListViewModel = ViewModelProvider(this).get(ChatListViewModel::class.java)
-
         val root = inflater.inflate(R.layout.fragment_chat_list, container, false)
 
         val v: View = layoutInflater.inflate(R.layout.activity_main_toolbar_mine_view, null)
         //toolbar
-        val  toolbar_view_textview: TextView = v.findViewById(R.id.textview_toolbar)
-        MainAct.toolbar.removeAllViews()
-        MainAct.toolbar.addView(v)
-        MainAct.toolbar.title =null
-        MainAct.toolbar.setBackgroundColor(R.color.white)
-        toolbar_view_textview.text  = "Chats"
-        MainAct.toolbar.setNavigationIcon(R.drawable.ic_baseline_navigate_before_24)
+//        val  toolbar_view_textview: TextView = v.findViewById(R.id.textview_toolbar)
+//        MainAct.toolbar.removeAllViews()
+//        MainAct.toolbar.addView(v)
+//        MainAct.toolbar.title =null
+//        MainAct.toolbar.setBackgroundColor(R.color.white)
+
+//        MainAct.toolbar.title =null
+//        val  textviewToolbar: TextView =  requireActivity().findViewById(R.id.toolbar_title)
+//        textviewToolbar.text  = "Chats"
+//
+//        MainAct.toolbar.setNavigationIcon(R.drawable.ic_baseline_navigate_before_24)
+//
 
         //создание затемнение при появлении bottomSheetView
         back_dim_layout = root.findViewById(R.id.bac_dim_layout)
@@ -78,13 +81,14 @@ class ChatListFragment : Fragment() {
         //создание recyclerView
         recyclerView_ = root.findViewById(R.id.recyclerView)
         recyclerView_.layoutManager = LinearLayoutManager(context)
-        recyclerView_.adapter = RecyclerAdapterChatList(fillList() as ArrayList<Message>)
+        recyclerView_.adapter = RecyclerAdapterChatList(fillRecycleList() as ArrayList<Message>)
 
 
         //divider
         val dividerItemDecoration = DividerItemDecoration(context, RecyclerView.VERTICAL)
         dividerItemDecoration.setDrawable(resources.getDrawable(R.drawable.divider_drawable))
         recyclerView_.addItemDecoration(dividerItemDecoration)
+
         //scrool to position 0
         recyclerView_.scrollToPosition(0)
 
@@ -110,12 +114,12 @@ class ChatListFragment : Fragment() {
         })
 
         //  recycleview для bottomSheet
-        val recyclerView_bottom_sheet: RecyclerView = root.findViewById(R.id.recyclerView_bottom_sheet)
-        recyclerView_bottom_sheet.layoutManager = LinearLayoutManager(context)
-        recyclerView_bottom_sheet.adapter = RecyclerAdapterPhotosList(fillList1())
+        val recyclerViewBottomSheet: RecyclerView = root.findViewById(R.id.recyclerView_bottom_sheet)
+        recyclerViewBottomSheet.layoutManager = LinearLayoutManager(context)
+        recyclerViewBottomSheet.adapter = RecyclerAdapterPhotosList(fillRecycleBottomSheetList())
 
-        val go_to_profile_btn : Button = root.findViewById(R.id.go_to_profilr_btn)
-        go_to_profile_btn.setOnClickListener {
+        val goToProfileBtn : Button = root.findViewById(R.id.go_to_profile_btn)
+        goToProfileBtn.setOnClickListener {
             NavigationController().goToFragment(R.id.action_navigation_dashboard_to_navigation_other_profile,root)
 
         }
@@ -139,8 +143,8 @@ class ChatListFragment : Fragment() {
         }
         bottomSheetBehavior.addBottomSheetCallback(bottomSheetCallback)
 
-
-        val mgScrollView = root.findViewById(R.id.dsfg) as NestedScrollView
+        //enable smooth scrolling
+        val mgScrollView = root.findViewById(R.id.nested_scroll_view) as NestedScrollView
         mgScrollView.isSmoothScrollingEnabled = true
 
 
@@ -149,9 +153,9 @@ class ChatListFragment : Fragment() {
         return root
     }
 
-    private fun fillList1(): ArrayList<ArrayList<Int>> {
+    private fun fillRecycleBottomSheetList(): ArrayList<ArrayList<Int>> {
         val dat = ArrayList<ArrayList<Int>>()
-        (0..5).forEach { i ->
+        for (it in 0..5) {
             val d = ArrayList<Int>()
             d.add(R.drawable.ic_launcher_foreground)
             d.add(R.drawable.ic_launcher_foreground)
@@ -211,7 +215,8 @@ class ChatListFragment : Fragment() {
     }
 
 
-    private fun fillList(): List<Message> {
+    @DelicateCoroutinesApi
+    private fun fillRecycleList(): List<Message> {
         val dat = mutableListOf<Message>()
 
         runBlocking {
@@ -235,21 +240,11 @@ class ChatListFragment : Fragment() {
                 MainAct.getInstance(requireContext()).MessagesDao().insert(Message(15, 1, 1, "Матвей Гребенников"))
                 MainAct.getInstance(requireContext()).MessagesDao().insert(Message(16, 1, 1, "Никита Лавлинский"))
                 MainAct.getInstance(requireContext()).MessagesDao().insert(Message(17, 1, 1, "Тимофей Щипунов"))
-                MainAct.getInstance(requireContext()).MessagesDao().insert(
-                    Message(
-                        18,
-                        1,
-                        1,
-                        "ФЛУДИЛЬНАЯ 201-351,352"
-                    )
-                )
+                MainAct.getInstance(requireContext()).MessagesDao().insert(Message(18, 1, 1, "ФЛУДИЛЬНАЯ 201-351,352"))
                 MainAct.getInstance(requireContext()).MessagesDao().insert(Message(21, 1, 1, "Ксения Фокина"))
 
                 (0..30).forEach { i ->
-                    Log.i("TAG", "load message : $i")
-                    dat.add(
-                        MainAct.getInstance(requireContext()).MessagesDao().getMessagesfromUserChat(1, 1, i)
-                    )
+                    dat.add(MainAct.getInstance(requireContext()).MessagesDao().getMessagesfromUserChat(1, 1, i))
                 }
             }
             job.join()

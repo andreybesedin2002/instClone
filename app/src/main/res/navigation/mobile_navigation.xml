@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_loginOrRegister">
+    app:startDestination="@id/navigation_loginOrRegister">
 
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.project.ui.MainPublications.MainPublicationsFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_navigation_home_to_navigation_comments"
             app:destination="@id/navigation_comments" />
@@ -18,10 +18,12 @@
         android:id="@+id/navigation_register"
         android:name="com.example.project.ui.login.RegisterFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_register" >
+        tools:layout="@layout/fragment_register">
         <action
             android:id="@+id/action_navigation_register_to_navigation_login"
-            app:destination="@id/navigation_login" />
+            app:destination="@id/navigation_login"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_right" />
 
 
     </fragment>
@@ -29,10 +31,13 @@
         android:id="@+id/navigation_login"
         android:name="com.example.project.ui.login.LoginFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_login">
         <action
+
             android:id="@+id/action_navigation_login_to_navigation_home2"
-            app:destination="@id/navigation_home" />
+            app:destination="@id/navigation_home"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_right" />
 
     </fragment>
 
@@ -40,11 +45,12 @@
         android:id="@+id/navigation_dashboard"
         android:name="com.example.project.ui.chat_list.ChatListFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_chat_list" >
+        tools:layout="@layout/fragment_chat_list">
         <action
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_right"
             android:id="@+id/action_navigation_dashboard_to_navigation_message"
-            app:destination="@id/navigation_message"
-            />
+            app:destination="@id/navigation_message" />
         <action
             android:id="@+id/action_navigation_dashboard_to_navigation_other_profile"
             app:destination="@id/navigation_other_profile" />
@@ -53,11 +59,17 @@
         android:id="@+id/navigation_loginOrRegister"
         android:name="com.example.project.ui.LoginOrRegister.LoginOrRegisterFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/login_or_register_fragment" >
+        tools:layout="@layout/login_or_register_fragment">
+
         <action
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_right"
             android:id="@+id/action_navigation_loginOrRegister_to_navigation_login"
             app:destination="@id/navigation_login" />
+
         <action
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_right"
             android:id="@+id/action_navigation_loginOrRegister_to_navigation_register"
             app:destination="@id/navigation_register" />
     </fragment>
@@ -65,7 +77,7 @@
         android:id="@+id/navigation_notifications"
         android:name="com.example.project.ui.profile.ProfileFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_profile" >
+        tools:layout="@layout/fragment_profile">
         <action
             android:id="@+id/action_navigation_notifications_to_navigation_publications"
             app:destination="@id/navigation_publications" />
@@ -79,7 +91,7 @@
         android:id="@+id/navigation_publications"
         android:name="com.example.project.ui.Publications.PublicationsFragment"
         android:label="dfghbjnkm"
-        tools:layout="@layout/fragmet_publications" >
+        tools:layout="@layout/fragmet_publications">
         <action
             android:id="@+id/action_navigation_publications_to_navigation_comments"
             app:destination="@id/navigation_comments" />
@@ -91,9 +103,9 @@
         tools:layout="@layout/fragment_comments" />
     <fragment
         android:id="@+id/navigation_other_profile"
-        android:name="com.example.project.ui.sersProfile.ProfileOtherUserFragment"
+        android:name="com.example.project.ui.usersProfile.ProfileOtherUserFragment"
         android:label="dfghbjnkm"
-        tools:layout="@layout/profile_other_user_fragment" >
+        tools:layout="@layout/profile_other_user_fragment">
         <action
             android:id="@+id/action_navigation_other_profile_to_navigation_message"
             app:destination="@id/navigation_message" />
@@ -103,7 +115,7 @@
         android:id="@+id/navigation_search"
         android:name="com.example.project.ui.search.SearchFragment"
         android:label="dfghbjnkm"
-        tools:layout="@layout/fragment_search" >
+        tools:layout="@layout/fragment_search">
 
         <action
             android:id="@+id/action_navigation_search_to_navigation_other_profile"

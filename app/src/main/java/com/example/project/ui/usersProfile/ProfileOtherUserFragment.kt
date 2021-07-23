@@ -1,4 +1,4 @@
-package com.example.project.ui.sersProfile
+package com.example.project.ui.usersProfile
 
 import android.os.Bundle
 import android.util.Log
@@ -28,7 +28,7 @@ class ProfileOtherUserFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.profile_other_user_fragment, container, false)
-        val recyclerView_: RecyclerView = root.findViewById(R.id.recycler_oter_profile)
+        val recyclerView_: RecyclerView = root.findViewById(R.id.recycler_other_profile)
         recyclerView_.layoutManager = LinearLayoutManager(context)
         recyclerView_.adapter = RecyclerAdapterPhotosList(fillList1())
 

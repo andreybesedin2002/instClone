@@ -48,7 +48,7 @@ class MessageFragment : Fragment() ,LifecycleEventObserver{
             recyclerView_.adapter = RecyclerAdapterPhotosList(fillList1())
 
             val mgScrollView =
-                InstanceView.findViewById<NestedScrollView>(R.id.dsfg) as NestedScrollView
+                InstanceView.findViewById<NestedScrollView>(R.id.nested_scroll_view) as NestedScrollView
             mgScrollView.isSmoothScrollingEnabled = true
         }
         private fun fillList1(): ArrayList<ArrayList<Int>> {
@@ -101,14 +101,15 @@ class MessageFragment : Fragment() ,LifecycleEventObserver{
 //            // hide the navigation bar.
 //            systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
 //        }
-         val v: View = layoutInflater.inflate(R.layout.activity_main_toolbar_mine_view, null)
-         val  toolbar_view_textview: TextView = v.findViewById(R.id.textview_toolbar)
-         MainAct.toolbar.removeAllViews()
-         MainAct.toolbar.addView(v)
-         MainAct.toolbar.title =null
-         toolbar_view_textview.text  = "James"
-         MainAct.toolbar.setNavigationIcon(R.drawable.ic_baseline_navigate_before_24)
-
+//         val v: View = layoutInflater.inflate(R.layout.activity_main_toolbar_mine_view, null)
+//
+////
+////         MainAct.toolbar.title =null
+////         val  textviewToolbar: TextView =  requireActivity().findViewById(R.id.toolbar_title)
+////         textviewToolbar.text  = "James"
+//
+//         MainAct.toolbar.setNavigationIcon(R.drawable.ic_baseline_navigate_before_24)
+//
 
          val arg1Value : String? = arguments?.getString("arg1")
          val arg2Value : Int? = arguments?.getInt("arg2")
@@ -131,7 +132,7 @@ class MessageFragment : Fragment() ,LifecycleEventObserver{
             (recyclerView_.layoutManager as LinearLayoutManager?)!!.findLastVisibleItemPosition()
 
 
-        val send_massege: Button = root.findViewById(R.id.button2)
+        val send_massege: Button = root.findViewById(R.id.sendBtn)
         send_massege.setOnClickListener {
             if (message.text.toString() != "") {
 

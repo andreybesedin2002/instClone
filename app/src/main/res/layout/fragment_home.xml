@@ -11,17 +11,15 @@
         android:id="@+id/recyclerView_home"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
-        />
     <RelativeLayout
         android:id="@+id/bac_dim_layout_share"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#C0000000"
-        android:visibility="gone"
-        >
-    </RelativeLayout>
+        android:visibility="gone"/>
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -30,8 +28,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-    <!-- Bottom Sheet contents -->
     <include layout="@layout/bottom_sheet_share" />
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </RelativeLayout>

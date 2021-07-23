@@ -18,6 +18,10 @@ import java.util.*
 
 class RecyclerAdapterShare(private val names: ArrayList<String>) :
     RecyclerView.Adapter<RecyclerAdapterShare.MyViewHolder>() {
+    companion object {
+        var w : Int = 0
+        var h : Int = 0
+    }
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var nameTextView: TextView? = null
@@ -48,13 +52,14 @@ class RecyclerAdapterShare(private val names: ArrayList<String>) :
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
-
+        w = holder.itemView.measuredWidth
+        h = holder.itemView.measuredHeight
         val tf = Typeface.createFromAsset(
             holder.itemView.context.assets,
             "fronts/Comfortaa-VariableFont_wght.ttf"
         )
         holder.nameTextView!!.typeface = tf
-        holder.img_selected!!.visibility = View.INVISIBLE
+        //  holder.img_selected!!.visibility = View.INVISIBLE
         Picasso.get()
             .load("https://c.wallhere.com/photos/68/15/1600x1200_px_animal_cute_dog_dogs_Frendly_Pet-1642413.jpg!d")
             .error(R.drawable.ic_launcher_foreground)
@@ -65,14 +70,22 @@ class RecyclerAdapterShare(private val names: ArrayList<String>) :
             //  holder.img_selected!!.visibility = View.VISIBLE
             Log.i(
                 "TAG",
-                "_______onBindViewHolder: click ${holder.img_selected!!.visibility}${holder.img_selected!!.visibility == 8} "
+                "_______onBindViewHolder: click" +
+                        " ${holder.itemView.rootView.measuredWidth}  ${holder.itemView.rootView.measuredHeight}  ${w}  ${h} "
             )
-            if (holder.img_selected!!.visibility == 8) {
+            if (holder.img_selected!!.visibility == View.INVISIBLE) {
                 holder.img_selected!!.visibility = View.VISIBLE
+
+                holder.itemView.rootView.measure(
+                    1080,2340
+                )
             }
-            if (holder.img_selected!!.visibility == 0) {
+            if (holder.img_selected!!.visibility == View.VISIBLE) {
                 holder.img_selected!!.visibility = View.INVISIBLE
+
+
             }
+
 
         }
         holder.containerView!!.setOnClickListener {

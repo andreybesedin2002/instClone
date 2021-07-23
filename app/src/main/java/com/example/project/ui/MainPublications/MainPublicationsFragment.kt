@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -37,6 +38,11 @@ class MainPublicationsFragment : Fragment() {
         homeViewModel =
             ViewModelProvider(this).get(MainPublicationsViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
+     //   MainAct.toolbar.title =null
+//        val  textviewToolbar: TextView =  requireActivity().findViewById(R.id.toolbar_title)
+//        textviewToolbar.text  = "Research"
+
+
         MainAct.navView.visibility = View.VISIBLE
 
         val recyclerView_: RecyclerView = root.findViewById(R.id.recyclerView_home)
@@ -81,7 +87,7 @@ class MainPublicationsFragment : Fragment() {
         val recyclerView_bottom_sheet: RecyclerView = view.findViewById(R.id.recyclerView_bottom_sheet_share)
         recyclerView_bottom_sheet.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,true)
         recyclerView_bottom_sheet.adapter = RecyclerAdapterShare(fillList() as java.util.ArrayList<String>)
-
+        recyclerView_bottom_sheet.scrollToPosition(0)
 
         // bottomSheet
         bottomSheetView = view.findViewById(R.id.bottom_sheet_share_)

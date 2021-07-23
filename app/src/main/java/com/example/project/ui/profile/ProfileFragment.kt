@@ -44,7 +44,7 @@ class ProfileFragment : Fragment() {
         recyclerView_.adapter = RecyclerAdapterPhotosList(fillList1())
 
         //
-        val imgView: ImageView = root.findViewById(R.id.imageView)
+        val imgView: ImageView = root.findViewById(R.id.profileIV)
         val name: TextView = root.findViewById(R.id.name_profile)
         val location: TextView = root.findViewById(R.id.lacation_user)
 

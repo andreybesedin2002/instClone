@@ -4,7 +4,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-tools:context=".ui.sersProfile.ProfileOtherUserFragment">
+tools:context=".ui.usersProfile.ProfileOtherUserFragment">
 
 
 <!--        tools:listitem="@layout/recyclerview_item_r"-->
@@ -20,7 +20,7 @@ tools:context=".ui.sersProfile.ProfileOtherUserFragment">
 
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/profileIV"
             android:layout_width="128dp"
             android:layout_height="128dp"
             android:layout_marginTop="100dp"
@@ -85,14 +85,14 @@ tools:context=".ui.sersProfile.ProfileOtherUserFragment">
             android:text="Message"
             android:textColor="@color/black"
             android:textStyle="bold|italic"
-            app:layout_constraintBottom_toTopOf="@+id/recycler_oter_profile"
+            app:layout_constraintBottom_toTopOf="@+id/recycler_other_profile"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:ignore="HardcodedText,MissingConstraints" />
 
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_oter_profile"
+            android:id="@+id/recycler_other_profile"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="50dp"
