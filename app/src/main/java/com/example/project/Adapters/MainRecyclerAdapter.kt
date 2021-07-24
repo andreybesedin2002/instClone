@@ -11,9 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.project.DB.Messages.Message
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
-import com.squareup.picasso.Transformation
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
-
 import java.util.*
 
 
@@ -23,6 +21,7 @@ class CustomRecyclerAdapter(private var names: ArrayList<Message>) :
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var largeTextView: TextView? = null
         var smallTextView: TextView? = null
+
         //  var img_person: ImageView? = null
         var img: ImageView? = null
         //  var img_person: ImageView? = null
@@ -35,12 +34,17 @@ class CustomRecyclerAdapter(private var names: ArrayList<Message>) :
         }
     }
 
-    fun addMessages(t: List<Message>) {
+    fun addMessages(t: List<Message>): Int {
         Log.i("-", 10.toString())
         val curs = names.size
+        var success = 0
         (0..9).forEach { i ->
-            names.add(t[i])
+            if (t[i] != null) {
+                names.add(t[i])
+                success += 1
+            }
         }
+        return success
     }
 
     fun addMessage(t: Message) {
@@ -52,9 +56,9 @@ class CustomRecyclerAdapter(private var names: ArrayList<Message>) :
     override fun getItemViewType(position: Int): Int {
         super.getItemViewType(position)
         Log.i("TAG", "getItemViewType: ${names[position]} ")
-            if (names[position].idUser == 1) {
-                return 1
-            }
+        if (names[position].idUser == 1) {
+            return 1
+        }
         return 0
     }
 
@@ -74,7 +78,8 @@ class CustomRecyclerAdapter(private var names: ArrayList<Message>) :
         holder.largeTextView?.text = names[position].text
         holder.smallTextView?.text = "кот"
         Picasso.get()
-            .load("https://avatars.githubusercontent.com/u/7534778?v=4").error(R.drawable.ic_launcher_foreground)
+            .load("https://avatars.githubusercontent.com/u/7534778?v=4")
+            .error(R.drawable.ic_launcher_foreground)
             .transform(CropCircleTransformation())
 
             .into(holder.img, object : Callback {

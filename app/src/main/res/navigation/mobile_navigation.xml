@@ -81,12 +81,23 @@
         <action
             android:id="@+id/action_navigation_notifications_to_navigation_publications"
             app:destination="@id/navigation_publications" />
+        <action
+            android:id="@+id/action_navigation_notifications_to_navigation_show_profile_photo"
+            app:destination="@id/navigation_show_profile_photo" />
+        <action
+            android:id="@+id/action_navigation_notifications_to_navigation_profile_data"
+            app:destination="@id/navigation_profile_data" />
     </fragment>
     <fragment
         android:id="@+id/navigation_message"
         android:name="com.example.project.ui.Message.MessageFragment"
         android:label="dfghbjnkm"
         tools:layout="@layout/fragment_message" />
+    <fragment
+        android:id="@+id/navigation_profile_data"
+        android:name="com.example.project.ui.profile.ProfileData.ProfileDataFragment"
+        android:label="dfghbjnkm"
+        tools:layout="@layout/fragment_profile_data" />
     <fragment
         android:id="@+id/navigation_publications"
         android:name="com.example.project.ui.Publications.PublicationsFragment"
@@ -101,6 +112,13 @@
         android:name="com.example.project.ui.Comments.CommentsFragment"
         android:label="dfghbjnkm"
         tools:layout="@layout/fragment_comments" />
+
+    <fragment
+        android:id="@+id/navigation_show_profile_photo"
+        android:name="com.example.project.ui.profile.showPhoto.ShowProfilePhotoFragment"
+        android:label="dfghbjnkm"
+        tools:layout="@layout/fragment_show_profile_photo" />
+
     <fragment
         android:id="@+id/navigation_other_profile"
         android:name="com.example.project.ui.usersProfile.ProfileOtherUserFragment"

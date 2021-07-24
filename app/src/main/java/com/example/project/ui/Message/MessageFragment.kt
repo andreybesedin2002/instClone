@@ -63,7 +63,6 @@ class MessageFragment : Fragment() ,LifecycleEventObserver{
             Log.i("TAG", "fillList1:sdf $dat ")
             return dat
         }
-        lateinit var db: AppDataBase
     }
     var firstVisibleInListview: Int = 0
     var lastVisibleInListview: Int = 0
@@ -71,7 +70,7 @@ class MessageFragment : Fragment() ,LifecycleEventObserver{
     var lastLoadedInListview: Int = 30
 
     var scrollLoadingChannel: PublishSubject<Int> =
-        PublishSubject.create<Int>()
+        PublishSubject.create()
 
     lateinit var recyclerView_: RecyclerView
 
@@ -94,22 +93,6 @@ class MessageFragment : Fragment() ,LifecycleEventObserver{
     ): View? {
 
         val root = inflater.inflate(R.layout.fragment_message, container, false)
-//        (context as Activity).window.decorView.apply {
-//            // Hide both the navigation bar and the status bar.
-//            // SYSTEM_UI_FLAG_FULLSCREEN is only available on Android 4.1 and higher, but as
-//            // a general rule, you should design your app to hide the status bar whenever you
-//            // hide the navigation bar.
-//            systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-//        }
-//         val v: View = layoutInflater.inflate(R.layout.activity_main_toolbar_mine_view, null)
-//
-////
-////         MainAct.toolbar.title =null
-////         val  textviewToolbar: TextView =  requireActivity().findViewById(R.id.toolbar_title)
-////         textviewToolbar.text  = "James"
-//
-//         MainAct.toolbar.setNavigationIcon(R.drawable.ic_baseline_navigate_before_24)
-//
 
          val arg1Value : String? = arguments?.getString("arg1")
          val arg2Value : Int? = arguments?.getInt("arg2")
@@ -216,13 +199,15 @@ class MessageFragment : Fragment() ,LifecycleEventObserver{
             }
 
             override fun onNext(t: List<Message>) {
-                Log.i("__", "fun On Next$t")
+                Log.i("__", "fun On Next${t.size}")
                 val ad = recyclerView_.adapter as CustomRecyclerAdapter
-                ad.addMessages(t)
-                ad.notifyItemInserted(ad.itemCount - 9)
-                lastLoadedInListview += 10
+
+                val success = ad.addMessages(t)
+                ad.notifyItemInserted(ad.itemCount - (success-1))
+                lastLoadedInListview += success
                 ad.notifyDataSetChanged()
-                createStringSubscriber()
+                    createStringSubscriber()
+
             }
 
             override fun onError(e: Throwable) {
