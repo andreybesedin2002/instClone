@@ -1,6 +1,7 @@
 package com.example.project
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,11 +15,14 @@ import com.example.project.Objects.Like
 import com.example.project.ui.Comments.CommentsFragment
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
-import kotlinx.coroutines.*
+import kotlinx.coroutines.DelicateCoroutinesApi
 import java.util.*
 
 
-class RecyclerAdapterComments(private val names: ArrayList<Comment>,private var parentFragment:CommentsFragment) :
+class RecyclerAdapterComments(
+    private val names: ArrayList<Comment>,
+    private var parentFragment: CommentsFragment
+) :
     RecyclerView.Adapter<RecyclerAdapterComments.MyViewHolder>() {
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -42,6 +46,14 @@ class RecyclerAdapterComments(private val names: ArrayList<Comment>,private var 
         }
     }
 
+    var replyPosition: Int? = null
+
+    fun addComment(t: String) {
+        names.add(CommentsFragment().createComment(t))
+        notifyItemInserted(this.itemCount - 1)
+        notifyDataSetChanged()
+
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val itemView: View = LayoutInflater.from(parent.context)
@@ -72,27 +84,38 @@ class RecyclerAdapterComments(private val names: ArrayList<Comment>,private var 
             holder.num_likes!!.text = names[position].likes.toString()
             holder.likes!!.setBackgroundResource(R.mipmap.ic_launcher_foreground__)
         }
-holder.data_comment!!.setOnClickListener{
-    parentFragment.setDataToEditText(names[position].dataComment+", ")
-}
-        val recyclerView_: RecyclerView = holder.itemView.findViewById(R.id.recycler_reply)
-        recyclerView_.layoutManager = LinearLayoutManager(holder.itemView.context)
-        recyclerView_.adapter = RecyclerAdapterReplyComments(fillList() as ArrayList<ReplyComment>)
-
+        holder.data_comment!!.setOnClickListener {
+            parentFragment.setDataToEditText(names[position].dataComment + ", ")
+            replyPosition = position
+        }
+        if(names[position].replies!=null) {
+            if (names[position].replies!!.isNotEmpty()) {
+                val recyclerView_: RecyclerView = holder.itemView.findViewById(R.id.recycler_reply)
+                recyclerView_.layoutManager = LinearLayoutManager(holder.itemView.context)
+                recyclerView_.adapter =
+                    RecyclerAdapterReplyComments(names[position].replies as ArrayList<ReplyComment>)
+            }
+        }
     }
 
-    private fun fillList(): List<ReplyComment> {
-        val dat = mutableListOf<ReplyComment>()
-        dat.add(ReplyComment(1, 1, 1, "reply1", 5))
-        dat.add(ReplyComment(2, 1, 1, "reply2", 5))
-        dat.add(ReplyComment(3, 1, 2, "reply3", 5))
-
-
-
-        return dat
-    }
 
     override fun getItemCount(): Int = names.size
+
+    fun addReply(position: Int?, text: String, findViewHolderForAdapterPosition: RecyclerView.ViewHolder?) {
+        Log.i("TAG", "addReply: $findViewHolderForAdapterPosition")
+        val recyclerView_: RecyclerView =
+            findViewHolderForAdapterPosition!!.itemView.findViewById(R.id.recycler_reply)
+
+        if (names[position!!].replies!!.isEmpty()) {
+            recyclerView_.layoutManager =
+                LinearLayoutManager(findViewHolderForAdapterPosition.itemView.context)
+            recyclerView_.adapter =
+                RecyclerAdapterReplyComments(listOf(ReplyComment(1, 1, 1, text, 5))as ArrayList<ReplyComment>)
+        }
+        else{
+            Log.i("TAG", "addReply: add second or more new reply")
+        }
+    }
 }
 
 

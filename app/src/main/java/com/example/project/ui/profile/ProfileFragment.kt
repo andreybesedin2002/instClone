@@ -6,7 +6,6 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Typeface
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -34,12 +33,8 @@ import jp.wasabeef.picasso.transformations.CropCircleTransformation
 
 
 class ProfileFragment : Fragment() {
-    private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
-    private lateinit var recyclerView_: RecyclerView
-    private lateinit var notificationsViewModel: ProfileViewModel
-    private lateinit var bottomSheetView: ConstraintLayout
-    private lateinit var back_dim_layout: RelativeLayout
-    private lateinit var Items: Array<String>
+
+
 
     val CAMERA_CODE = 1
     val GALLERY_CODE = 0
@@ -47,7 +42,12 @@ class ProfileFragment : Fragment() {
     companion object {
         @SuppressLint("StaticFieldLeak")
         var profileIV: ImageView? = null
-
+         lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
+         lateinit var recyclerView_: RecyclerView
+         lateinit var notificationsViewModel: ProfileViewModel
+         lateinit var bottomSheetView: ConstraintLayout
+         lateinit var back_dim_layout: RelativeLayout
+         lateinit var Items: Array<String>
     }
 
     override fun onCreateView(
@@ -104,8 +104,9 @@ class ProfileFragment : Fragment() {
 
 
 
-        back_dim_layout = view.findViewById(R.id.bac_dim_layout)
+        back_dim_layout = view.findViewById(R.id.bac_dim_layout_profile)
         back_dim_layout.setOnClickListener {
+            Log.i("TAG", "onViewCreated: jknjnjnjnjn")
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
             back_dim_layout.visibility = View.GONE
         }
@@ -129,7 +130,7 @@ class ProfileFragment : Fragment() {
         bottomSheetBehavior.addBottomSheetCallback(bottomSheetCallback)
 
 
-        val deleteProfilePhoto: Button = view.findViewById(R.id.delete_photo)
+        val deleteProfilePhoto: TextView = view.findViewById(R.id.delete_photo)
         deleteProfilePhoto.setOnClickListener {
             Picasso.get()
                 .load(R.color.no_photo)
@@ -138,26 +139,27 @@ class ProfileFragment : Fragment() {
                 .into(profileIV)
         }
 
-        val showProfilePhoto: Button = view.findViewById(R.id.show_photo)
+        val showProfilePhoto: TextView = view.findViewById(R.id.show_photo)
         showProfilePhoto.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_notifications_to_navigation_show_profile_photo)
         }
 
-        val ProfileData: Button = view.findViewById(R.id.change_profile_data)
-        ProfileData.setOnClickListener {
-//            findNavController().navigate(R.id.action_navigation_notifications_to_navigation_profile_data)
-
+        val addPhoto: TextView = view.findViewById(R.id.add_photo)
+        addPhoto.setOnClickListener {
             ImageOnClick(view)
+        }
+
+        val ProfileData: TextView = view.findViewById(R.id.change_profile_data)
+        ProfileData.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_notifications_to_navigation_profile_data)
 
         }
 
 
         val changeProfileBtn: Button = view.findViewById(R.id.change_profile_btn)
-
         changeProfileBtn.setOnClickListener {
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
             back_dim_layout.visibility = View.VISIBLE
-
 //            val anim = ObjectAnimator.ofFloat(back_dim_layout, "alpha", 1.0f,0.0f)
 //            anim.duration = 3000 // duration 3 seconds
 //            anim.start()
@@ -177,7 +179,12 @@ class ProfileFragment : Fragment() {
                     Log.i("CameraCode", "" + CAMERA_CODE)
                     val bundle = data!!.extras
                     val bmp = bundle!!["data"] as Bitmap?
-                    val resized = Bitmap.createScaledBitmap(bmp!!, profileIV!!.width, profileIV!!.height, true)
+                    val resized = Bitmap.createScaledBitmap(
+                        bmp!!,
+                        profileIV!!.width,
+                        profileIV!!.height,
+                        true
+                    )
                     profileIV!!.setImageBitmap(resized)
 
                 }

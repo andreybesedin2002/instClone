@@ -59,7 +59,7 @@ class MainAct : AppCompatActivity() {
                                     getInstance(context).AuthDao().insert(e)
                                 }
                                 COMMENT_DATA.forEach { e ->
-                                    getInstance(context).CommentDao().insert(e)
+                             //       getInstance(context).CommentDao().insert(e)
                                 }
                             }
                         }
@@ -71,26 +71,26 @@ class MainAct : AppCompatActivity() {
 
 
                     }
-                })
+                })  .fallbackToDestructiveMigration()
                 .build()
 
         val PREPOPULATE_DATA =
             listOf(AuthData("login@1", "11111111"), AuthData("login@gmail.com", "12345678"))
         val COMMENT_DATA =
             listOf(
-                Comment(1, 1, "12:32", 0, 1, "comment1", 5),
-                Comment(2, 1, "10:46", 1, 1, "comment2", 4),
-                Comment(3, 1, "10:46", 1, 1, "comment3", 4),
-                Comment(4, 1, "10:46", 1, 1, "comment4", 4),
-                Comment(5, 1, "10:46", 1, 1, "comment5", 3),
-                Comment(6, 1, "10:46", 1, 1, "comment6", 4),
-                Comment(7, 1, "10:46", 1, 1, "comment7", 4),
-                Comment(8, 1, "10:46", 1, 1, "comment8", 6),
-                Comment(9, 1, "10:46", 1, 1, "comment9", 4),
-                Comment(10, 1, "10:46", 1, 1, "comment10", 8),
-                Comment(11, 1, "10:46", 1, 1, "comment11", 4),
-                Comment(12, 1, "10:46", 1, 1, "comment12", 14),
-                Comment(13, 1, "03:19", 2, 1, "comment13", 3)
+                Comment(1, 1, "12:32", 0, 1, "comment1", 5,null),
+                Comment(2, 1, "10:46", 1, 1, "comment2", 4,null),
+                Comment(3, 1, "10:46", 1, 1, "comment3", 4,null),
+                Comment(4, 1, "10:46", 1, 1, "comment4", 4,null),
+                Comment(5, 1, "10:46", 1, 1, "comment5", 3,null),
+                Comment(6, 1, "10:46", 1, 1, "comment6", 4,null),
+                Comment(7, 1, "10:46", 1, 1, "comment7", 4,null),
+                Comment(8, 1, "10:46", 1, 1, "comment8", 6,null),
+                Comment(9, 1, "10:46", 1, 1, "comment9", 4,null),
+                Comment(10, 1, "10:46", 1, 1, "comment10", 8,null),
+                Comment(11, 1, "10:46", 1, 1, "comment11", 4,null),
+                Comment(12, 1, "10:46", 1, 1, "comment12", 14,null),
+                Comment(13, 1, "03:19", 2, 1, "comment13", 3,null)
             )
 
     }

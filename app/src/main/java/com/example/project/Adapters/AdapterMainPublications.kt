@@ -64,7 +64,7 @@ class RecyclerAdapterMainPublications(private val names: ArrayList<String>) :
             .into(holder.img)
         Picasso.get()
             .load("https://c.wallhere.com/photos/68/15/1600x1200_px_animal_cute_dog_dogs_Frendly_Pet-1642413.jpg!d").error(R.drawable.ic_launcher_foreground)
-            .resize(300,300)
+            .resize(holder.itemView.rootView.width,300)
             .into(holder.img_publication)
 
         holder.like_publication!!.setOnClickListener {

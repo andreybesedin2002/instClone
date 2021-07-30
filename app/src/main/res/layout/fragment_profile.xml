@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.profile.ProfileFragment">
-    <RelativeLayout
-        android:id="@+id/bac_dim_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#C0000000"
-android:visibility="gone"
-        >
-    </RelativeLayout>
+
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scroll"
@@ -94,17 +87,21 @@ android:visibility="gone"
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
-
+    <RelativeLayout
+        android:id="@+id/bac_dim_layout_profile"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#C0000000"
+        android:visibility="gone"
+        >
+    </RelativeLayout>
     <!-- Bottom Sheet contents -->
     <androidx.coordinatorlayout.widget.CoordinatorLayout
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        android:layout_alignParentBottom="true">
+
         <include layout="@layout/bottom_sheet_profile" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

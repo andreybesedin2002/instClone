@@ -37,7 +37,8 @@
             android:id="@+id/action_navigation_login_to_navigation_home2"
             app:destination="@id/navigation_home"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_right" />
+            app:exitAnim="@anim/slide_out_right"
+            app:popUpToInclusive="false" />
 
     </fragment>
 
@@ -62,10 +63,12 @@
         tools:layout="@layout/login_or_register_fragment">
 
         <action
+            android:id="@+id/action_navigation_loginOrRegister_to_navigation_login"
+            app:destination="@id/navigation_login"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_right"
-            android:id="@+id/action_navigation_loginOrRegister_to_navigation_login"
-            app:destination="@id/navigation_login" />
+            app:launchSingleTop="false"
+            app:popUpToInclusive="false" />
 
         <action
             app:enterAnim="@anim/slide_in_right"
@@ -137,6 +140,8 @@
 
         <action
             android:id="@+id/action_navigation_search_to_navigation_other_profile"
-            app:destination="@id/navigation_other_profile" />
+            app:destination="@id/navigation_other_profile"
+
+            />
     </fragment>
 </navigation>

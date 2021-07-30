@@ -14,9 +14,8 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
-import com.example.project.MainAct
-
 import com.example.project.R
 import kotlinx.android.synthetic.main.activity_main2.*
 import kotlinx.android.synthetic.main.fragment_item.view.*
@@ -124,7 +123,12 @@ class LoginFragment : Fragment() {
     }
 
     private fun updateUiWithUser() {
-      findNavController().navigate(R.id.action_navigation_login_to_navigation_home2)
+
+    //    findNavController().popBackStack(R.id.navigation_login, true);
+        val navBuilder = NavOptions.Builder()
+        val navOptions: NavOptions = navBuilder.setPopUpTo(R.id.navigation_login,true).setPopUpTo(R.id.navigation_loginOrRegister   ,true).build()
+
+        findNavController().navigate(R.id.action_navigation_login_to_navigation_home2,null,navOptions)
     }
 
     private fun showLoginFailed(@StringRes errorString: Int) {

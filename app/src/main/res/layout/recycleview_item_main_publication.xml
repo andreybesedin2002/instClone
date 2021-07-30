@@ -4,13 +4,13 @@
     android:id="@+id/cardviewidchatlist"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="20dp"
+    android:layout_marginTop="40dp"
 
     android:background="@color/white"
     android:orientation="vertical">
 
         <LinearLayout
-
+            android:layout_marginBottom="3dp"
             android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,15 +36,16 @@
         </LinearLayout>
 
         <ImageView
-            android:layout_marginTop="10dp"
+
             android:id="@+id/img_publication"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="270dp"
             android:background="@color/dark_grey"
            />
 
         <LinearLayout
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
+
             android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -52,8 +53,8 @@
 
             <ImageView
                 android:id="@+id/like"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
                 android:layout_marginRight="5dp"
                 android:background="@drawable/ic_baseline_favorite_border_24"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -70,8 +71,8 @@
 
             <ImageView
                 android:id="@+id/comment"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
                 android:layout_marginRight="5dp"
                 android:layout_weight="0.33"
                 android:background="@drawable/ic_baseline_message_24"
@@ -89,8 +90,8 @@
 
             <ImageView
                 android:id="@+id/share"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
                 android:layout_weight="0.33"
                 android:background="@drawable/ic_baseline_share_24"
                 app:layout_constraintEnd_toEndOf="parent"

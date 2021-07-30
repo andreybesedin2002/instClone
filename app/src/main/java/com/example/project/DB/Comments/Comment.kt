@@ -4,15 +4,15 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 
-@Entity(tableName = "Comment")
 data class Comment(
     @PrimaryKey
     val idcomment: Int,
     val idpost: Int,
-    val time : String,
+    val time: String,
     val numComment: Int,
     val idIser: Int,
     val dataComment: String,
-    var likes:Int
+    var likes:Int,
+    var replies: List<ReplyComment>?
    // val replyComments: List<ReplyComment>
 )

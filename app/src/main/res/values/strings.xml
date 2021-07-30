@@ -31,4 +31,5 @@
     <string name="delete_photo">delete photo</string>
     <string name="show_photo">show photo</string>
     <string name="change_profile_data">change profile data</string>
+    <string name="add_photo">add_photo</string>
 </resources>
