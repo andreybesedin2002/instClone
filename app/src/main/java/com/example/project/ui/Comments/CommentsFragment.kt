@@ -34,21 +34,36 @@ class CommentsFragment : Fragment() {
 
     }
 
-    private lateinit var viewModel: CommentsViewModel
 
+
+    @SuppressLint("UseRequireInsteadOfGet")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         val root = inflater.inflate(R.layout.fragment_comments, container, false)
-        val recyclerView_: RecyclerView = root.findViewById(R.id.recyclerview_comments)
+
+        val recyclerView_: RecyclerView = root.findViewById(R.id.recyclerview_comments) as RecyclerView
         recyclerView_.layoutManager = LinearLayoutManager(context)
-        recyclerView_.adapter = RecyclerAdapterComments(fillList() as ArrayList<Comment>, this)
-        inputField = root.findViewById(R.id.input_filed)
-        sendBtn = root.findViewById(R.id.sendBtn)
+
+        val arg1Value = arguments!!.getString("arg1")
+        val arg2Value = arguments!!.getInt("arg2")
+        Log.i("TAG", "onCreateView: + $arg1Value")
+        Log.i("TAG", "onCreateView: + $arg2Value")
+        recyclerView_.adapter = RecyclerAdapterComments(
+            fillList(arg1Value) as ArrayList<Comment>,
+            this
+        )
+
+        inputField = root.findViewById(R.id.input_filed) as EditText?
+        sendBtn = root.findViewById(R.id.sendBtn) as Button?
         sendBtn!!.setOnClickListener {
             if((recyclerView_.adapter as RecyclerAdapterComments).replyPosition!=null){
-                Log.i("TAG", "addReply _ : ${(recyclerView_.adapter as RecyclerAdapterComments).replyPosition!!}")
+                Log.i(
+                    "TAG",
+                    "addReply _ : ${(recyclerView_.adapter as RecyclerAdapterComments).replyPosition!!}"
+                )
 
 
 
@@ -75,13 +90,12 @@ class CommentsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(CommentsViewModel::class.java)
-    }
+        }
 
-    private fun fillList(): List<com.example.project.DB.Comments.Comment> {
+    private fun fillList(get: String?): List<Comment> {
+        Log.i("TAG", "fillList: vgbhj $get")
         val l = runBlocking {
             val list_ = GlobalScope.async {
-                //   return@async MainAct.getInstance(requireContext()).CommentDao().getAllCommetsPost()
                 val list = mutableListOf<Comment>()
                 for (j in 0..5) {
                     val replyCommentsList = mutableListOf<ReplyComment>()

@@ -6,14 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
-import android.widget.TextView
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project.*
+import com.example.project.REST.GetDataService
+import com.example.project.REST.MainPublicationModel
+import com.example.project.REST.MessageMedel
+import com.example.project.REST.RetrofitClientInstance.retrofitInstance
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class MainPublicationsFragment : Fragment() {
@@ -29,7 +36,6 @@ class MainPublicationsFragment : Fragment() {
     private lateinit var homeViewModel: MainPublicationsViewModel
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -38,37 +44,46 @@ class MainPublicationsFragment : Fragment() {
         homeViewModel =
             ViewModelProvider(this).get(MainPublicationsViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
-     //   MainAct.toolbar.title =null
-//        val  textviewToolbar: TextView =  requireActivity().findViewById(R.id.toolbar_title)
-//        textviewToolbar.text  = "Research"
-
 
         MainAct.navView.visibility = View.VISIBLE
+        //val recyclerView_: RecyclerView = root.findViewById(R.id.recyclerView_home)
+//                recyclerView_.layoutManager = LinearLayoutManager(context)
+//                recyclerView_.adapter = RecyclerAdapterMainPublications(fillList_() as ArrayList<MainPublicationModel>)
 
-        val recyclerView_: RecyclerView = root.findViewById(R.id.recyclerView_home)
-        recyclerView_.layoutManager = LinearLayoutManager(context)
-        recyclerView_.adapter = RecyclerAdapterMainPublications(fillList() as ArrayList<String>)
-
-// Use this to programmatically apply behavior attributes
-//        val bottomSheetCallback = object : BottomSheetBehavior.BottomSheetCallback() {
 //
-//            override fun onStateChanged(bottomSheet: View, newState: Int) {
-//                bottomSheet.findViewById<TextView>(R.id.afds).text = "Qwr"
-//
-//                // Do something for new state
-//            }
-//
-//            override fun onSlide(bottomSheet: View, slideOffset: Float) {
-//                // Do something for slide offset
-//            }
-//        }
-//        standardBottomSheetBehavior.addBottomSheetCallback(bottomSheetCallback)
+        val service = retrofitInstance!!.create(
+            GetDataService::class.java
+        )
+        val call: Call<List<MainPublicationModel>> = service.getMainPuplications()
+        //Log.i("TAG", "onCreateView: ${call.execute()}")
+
+        call.enqueue(object : Callback<List<MainPublicationModel>> {
+
+            override fun onResponse(
+                call: Call<List<MainPublicationModel>>,
+                response: Response<List<MainPublicationModel>>
+            ) {
+                Log.i("TAG", "onResponse: ${response.body()}")
+                val recyclerView_: RecyclerView = root.findViewById(R.id.recyclerView_home)
+                recyclerView_.layoutManager = LinearLayoutManager(context)
+                recyclerView_.adapter =
+                    RecyclerAdapterMainPublications(response.body() as ArrayList<MainPublicationModel>)
+
+            }
+
+            override fun onFailure(call: Call<List<MainPublicationModel>>, t: Throwable) {
+                Log.i("TAG", "onFailure: $t ")
+                Toast.makeText(
+                    context,
+                    "Something went wrong...Please try later!",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+            }
 
 
-//       val textView: TextView = root.findViewById(R.id.)
-//        homeViewModel.text.observe(viewLifecycleOwner, Observer {
-//            textView.text = it
-//        })
+        })
+
         return root
     }
 
@@ -84,9 +99,15 @@ class MainPublicationsFragment : Fragment() {
         }
         //recycleview for bottomSheet
 
-        val recyclerView_bottom_sheet: RecyclerView = view.findViewById(R.id.recyclerView_bottom_sheet_share)
-        recyclerView_bottom_sheet.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,true)
-        recyclerView_bottom_sheet.adapter = RecyclerAdapterShare(fillList() as java.util.ArrayList<String>)
+        val recyclerView_bottom_sheet: RecyclerView =
+            view.findViewById(R.id.recyclerView_bottom_sheet_share)
+        recyclerView_bottom_sheet.layoutManager = LinearLayoutManager(
+            context,
+            LinearLayoutManager.HORIZONTAL,
+            true
+        )
+        recyclerView_bottom_sheet.adapter =
+            RecyclerAdapterShare(fillList() as java.util.ArrayList<String>)
         recyclerView_bottom_sheet.scrollToPosition(0)
 
         // bottomSheet
@@ -110,46 +131,7 @@ class MainPublicationsFragment : Fragment() {
 
 
 
-        //   MainAct.navView.visibility = View.GONE
-//        val but = view.findViewById<Button>(R.id.sd)
-//        but.setOnClickListener {
-//        val bottomSheetView = view.findViewById<ConstraintLayout>(R.id.bottomSheet)
-//         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetView)
-//        recyclerView_ = view.findViewById(R.id.recyclerView)
-//
-//        recyclerView_.layoutManager = LinearLayoutManager(context)
-//        recyclerView_.adapter = RecyclerAdapterPhotosList(fillList() as ArrayList<String>)
-//
-//        val mgScrollView = view.findViewById<NestedScrollView>(R.id.dsfg) as NestedScrollView
-//        mgScrollView.isSmoothScrollingEnabled = true;
 
-        ///        val textView: TextView = root.findViewById(R.id.text_notifications)
-//        notificationsViewModel.text.observe(viewLifecycleOwner, Observer {
-//            textView.text = it
-//
-
-//            // val metrics = resources.displayMetrics
-//            //   bottomSheetBehavior.peekHeight = metrics.heightPixels / 2
-//            //bottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
-//
-//            val bottomSheetCallback = object : BottomSheetBehavior.BottomSheetCallback() {
-//
-//                override fun onStateChanged(bottomSheet: View, newState: Int) {
-//                    // Do something for new state
-//                    Log.i("TAG", "onStateChanged: $newState")
-//
-//                }
-//
-//                override fun onSlide(bottomSheet: View, slideOffset: Float) {
-//                    // Do something for slide offset
-//                    Log.i("TAG", "onSlide: $slideOffset")
-//                }
-//            }
-//            bottomSheetBehavior.addBottomSheetCallback(bottomSheetCallback)
-//            bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-//            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-//        }
-//
 
     }
 
@@ -162,4 +144,15 @@ class MainPublicationsFragment : Fragment() {
         Log.i("TAG", "fillList: ---")
         return dat
     }
+    private fun fillList_(): List<MainPublicationModel> {
+        val dat = mutableListOf<MainPublicationModel>()
+        (0..15).forEach { i ->
+            Log.i("TAG", "load String : $i")
+            dat.add(MainPublicationModel("1323",1,1,"wfwer","ds","6"))
+        }
+        Log.i("TAG", "fillList: ---")
+        return dat
+    }
 }
+
+

@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.RelativeLayout
-import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
@@ -120,7 +119,10 @@ class ChatListFragment : Fragment() {
 
         val goToProfileBtn : Button = root.findViewById(R.id.go_to_profile_btn)
         goToProfileBtn.setOnClickListener {
-            NavigationController().goToFragment(R.id.action_navigation_dashboard_to_navigation_other_profile,root)
+            NavigationController().goToFragment(
+                R.id.action_navigation_dashboard_to_navigation_other_profile,
+                root,null
+            )
 
         }
         //action_navigation_dashboard_to_navigation_other_profile
