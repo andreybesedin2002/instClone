@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.TextView
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
@@ -19,8 +19,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project.*
-import com.example.project.DB.AppDataBase
 import com.example.project.DB.Messages.Message
+import com.example.project.REST.MessageMedel
+import com.example.project.REST.RetrofitClientInstance
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.Disposable
@@ -28,6 +29,9 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_message.*
 import kotlinx.coroutines.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.ArrayList
 
 class MessageFragment : Fragment() ,LifecycleEventObserver{
@@ -87,22 +91,27 @@ class MessageFragment : Fragment() ,LifecycleEventObserver{
 
     }
 
-     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val root = inflater.inflate(R.layout.fragment_message, container, false)
 
          val arg1Value : String? = arguments?.getString("arg1")
          val arg2Value : Int? = arguments?.getInt("arg2")
 
-         Log.i("TAG", "onCreateView:  link $arg1Value , $arg2Value")
          InstanceView = root
-         InstanceVContext = requireContext()    //создание recyclerView
-         recyclerView_ = root.findViewById(R.id.recyclerView)
-         recyclerView_.layoutManager = LinearLayoutManager(context)
-         recyclerView_.adapter = CustomRecyclerAdapter(fillList() as ArrayList<Message>)
+
+         InstanceVContext = requireContext()
+         //создание recyclerView
+
+         val call: Call<List<MessageMedel>> = RetrofitClientInstance.service.getChatMessages()
+
+         call.enqueue(object : Callback<List<MessageMedel>> {
+             override fun onResponse(call: Call<List<MessageMedel>>, response: Response<List<MessageMedel>>) =
+                 loadMessages(call,response,root)
+
+             override fun onFailure(call: Call<List<MessageMedel>>, t: Throwable) =
+                 Toast.makeText(context, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show()
+         })
 
 
          (recyclerView_.layoutManager as LinearLayoutManager).reverseLayout = true
@@ -118,8 +127,7 @@ class MessageFragment : Fragment() ,LifecycleEventObserver{
         val send_massege: Button = root.findViewById(R.id.sendBtn)
         send_massege.setOnClickListener {
             if (message.text.toString() != "") {
-
-                addMessage(Message(0, 1, 1, message.text.toString()))
+                addMessage(MessageMedel(0, 1, 1, message.text.toString()))
                 Log.i("TAG", "onCreate: fghj")
 
             }
@@ -137,13 +145,8 @@ class MessageFragment : Fragment() ,LifecycleEventObserver{
                     (recyclerView.layoutManager as LinearLayoutManager?)!!.findLastVisibleItemPosition()
 
                 if (currentLastVisible == lastLoadedInListview) {
-                    Log.i(
-                        "RecyclerView scrolled: ",
-                        " $currentFirstVisible - $currentLastVisible $lastLoadedInListview"
-                    )
                     scrollLoadingChannel.onNext(lastLoadedInListview)
                 }
-
                 firstVisibleInListview = currentFirstVisible
                 lastVisibleInListview = currentLastVisible
             }
@@ -154,13 +157,16 @@ class MessageFragment : Fragment() ,LifecycleEventObserver{
 
         return root
     }
+    private fun loadMessages(call: Call<List<MessageMedel>>, response: Response<List<MessageMedel>>, v: View?) {
+        recyclerView_ = v!!.findViewById(R.id.recyclerView)
+        recyclerView_.layoutManager = LinearLayoutManager(context)
+        recyclerView_.adapter = CustomRecyclerAdapter(response.body() as ArrayList<MessageMedel>?)
+    }
 
-    private fun addMessage(message: Message) {
+    private fun addMessage(message: MessageMedel) {
         Log.i("__", "addMessage$message")
         val ad = recyclerView_.adapter as CustomRecyclerAdapter
         ad.addMessage(message)
-        // ad.notifyItemInserted(ad.itemCount -1)
-
         ad.notifyDataSetChanged()
     }
 
@@ -168,20 +174,15 @@ class MessageFragment : Fragment() ,LifecycleEventObserver{
 
         val toLoadingChannelSubscriber: io.reactivex.rxjava3.core.Observer<Int> = object :
             io.reactivex.rxjava3.core.Observer<Int> {
-            override fun onSubscribe(d: Disposable) {}
-            override fun onComplete() {}
-
-
+            override fun onSubscribe(d: Disposable) = Unit
+            override fun onComplete() = Unit
             override fun onNext(t: Int) {
                  GlobalScope.launch(Dispatchers.Default) {
                     loadData(t)
                 }
             }
-
             override fun onError(e: Throwable?) {}
         }
-
-
 
         scrollLoadingChannel.take(1).subscribe(toLoadingChannelSubscriber)
     }
@@ -190,15 +191,13 @@ class MessageFragment : Fragment() ,LifecycleEventObserver{
     @SuppressLint("CheckResult")
     suspend fun loadData(lastloaded: Int) {
 
-        val toLoadingChannelSubscriber: io.reactivex.rxjava3.core.Observer<List<Message>> = object :
-            io.reactivex.rxjava3.core.Observer<List<Message>> {
-            override fun onSubscribe(d: Disposable) {
-            }
+        val toLoadingChannelSubscriber: io.reactivex.rxjava3.core.Observer<List<MessageMedel>> = object :
+            io.reactivex.rxjava3.core.Observer<List<MessageMedel>> {
+            override fun onSubscribe(d: Disposable) = Unit
 
-            override fun onComplete() {
-            }
+            override fun onComplete() = Unit
 
-            override fun onNext(t: List<Message>) {
+            override fun onNext(t: List<MessageMedel>) {
                 Log.i("__", "fun On Next${t.size}")
                 val ad = recyclerView_.adapter as CustomRecyclerAdapter
 
@@ -210,12 +209,11 @@ class MessageFragment : Fragment() ,LifecycleEventObserver{
 
             }
 
-            override fun onError(e: Throwable) {
+            override fun onError(e: Throwable) = Unit
 
-            }
         }
 
-        DataService().dataMessages(lastloaded).subscribeOn(Schedulers.io())
+        DataService().dataMessages(lastloaded)!!.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe(toLoadingChannelSubscriber)
     }
 
@@ -225,7 +223,6 @@ class MessageFragment : Fragment() ,LifecycleEventObserver{
 
         runBlocking {
             val job = GlobalScope.launch(Dispatchers.Default) {
-
 
                 (0..100).forEach { el ->
                     MainAct.getInstance(requireContext()).MessagesDao().insert(Message(2 * el, 1, 1, "Really love your most recent photo. I’ve been trying to capture the same thing for a few months and would love some tips!"))

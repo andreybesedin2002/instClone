@@ -9,13 +9,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project.DB.Messages.Message
+import com.example.project.REST.MessageMedel
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import java.util.*
 
 
-class CustomRecyclerAdapter(private var names: ArrayList<Message>) :
+class CustomRecyclerAdapter(private var names: ArrayList<MessageMedel>?) :
     RecyclerView.Adapter<CustomRecyclerAdapter.MyViewHolder>() {
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -34,29 +35,28 @@ class CustomRecyclerAdapter(private var names: ArrayList<Message>) :
         }
     }
 
-    fun addMessages(t: List<Message>): Int {
+    fun addMessages(t: List<MessageMedel>): Int {
         Log.i("-", 10.toString())
-        val curs = names.size
+        val curs = names!!.size
         var success = 0
         (0..9).forEach { i ->
             if (t[i] != null) {
-                names.add(t[i])
+                names!!.add(t[i])
                 success += 1
             }
         }
         return success
     }
 
-    fun addMessage(t: Message) {
+    fun addMessage(t: MessageMedel) {
         Log.i("-", 10.toString())
-        names = ((listOf(t) + names) as ArrayList<Message>)
+        names = ((listOf(t) + names) as ArrayList<MessageMedel>)
 
     }
 
     override fun getItemViewType(position: Int): Int {
         super.getItemViewType(position)
-        Log.i("TAG", "getItemViewType: ${names[position]} ")
-        if (names[position].idUser == 1) {
+        if (names!![position].idUser == 1) {
             return 1
         }
         return 0
@@ -75,7 +75,7 @@ class CustomRecyclerAdapter(private var names: ArrayList<Message>) :
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.largeTextView?.text = names[position].text
+        holder.largeTextView?.text = names!![position].text
         holder.smallTextView?.text = "кот"
         Picasso.get()
             .load("https://avatars.githubusercontent.com/u/7534778?v=4")
@@ -103,7 +103,7 @@ class CustomRecyclerAdapter(private var names: ArrayList<Message>) :
 //            notifyDataSetChanged()
     }
 
-    override fun getItemCount(): Int = names.size
+    override fun getItemCount(): Int = names!!.size
 }
 
 

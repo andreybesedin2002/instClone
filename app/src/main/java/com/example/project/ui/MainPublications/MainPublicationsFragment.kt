@@ -16,6 +16,7 @@ import com.example.project.*
 import com.example.project.REST.GetDataService
 import com.example.project.REST.MainPublicationModel
 import com.example.project.REST.MessageMedel
+import com.example.project.REST.RetrofitClientInstance
 import com.example.project.REST.RetrofitClientInstance.retrofitInstance
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import retrofit2.Call
@@ -46,42 +47,17 @@ class MainPublicationsFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_home, container, false)
 
         MainAct.navView.visibility = View.VISIBLE
-        //val recyclerView_: RecyclerView = root.findViewById(R.id.recyclerView_home)
-//                recyclerView_.layoutManager = LinearLayoutManager(context)
-//                recyclerView_.adapter = RecyclerAdapterMainPublications(fillList_() as ArrayList<MainPublicationModel>)
 
-//
-        val service = retrofitInstance!!.create(
-            GetDataService::class.java
-        )
-        val call: Call<List<MainPublicationModel>> = service.getMainPuplications()
-        //Log.i("TAG", "onCreateView: ${call.execute()}")
+
+        val call: Call<List<MainPublicationModel>> = RetrofitClientInstance.service.getMainPuplications()
 
         call.enqueue(object : Callback<List<MainPublicationModel>> {
 
-            override fun onResponse(
-                call: Call<List<MainPublicationModel>>,
-                response: Response<List<MainPublicationModel>>
-            ) {
-                Log.i("TAG", "onResponse: ${response.body()}")
-                val recyclerView_: RecyclerView = root.findViewById(R.id.recyclerView_home)
-                recyclerView_.layoutManager = LinearLayoutManager(context)
-                recyclerView_.adapter =
-                    RecyclerAdapterMainPublications(response.body() as ArrayList<MainPublicationModel>)
+            override fun onResponse(call: Call<List<MainPublicationModel>>, response: Response<List<MainPublicationModel>>) =
+                loadPublications(call,response,root)
 
-            }
-
-            override fun onFailure(call: Call<List<MainPublicationModel>>, t: Throwable) {
-                Log.i("TAG", "onFailure: $t ")
-                Toast.makeText(
-                    context,
-                    "Something went wrong...Please try later!",
-                    Toast.LENGTH_SHORT
-                ).show()
-
-            }
-
-
+            override fun onFailure(call: Call<List<MainPublicationModel>>, t: Throwable) =
+                Toast.makeText(context, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show()
         })
 
         return root
@@ -128,10 +104,13 @@ class MainPublicationsFragment : Fragment() {
         }
         bottomSheetBehavior.addBottomSheetCallback(bottomSheetCallback)
 
+    }
 
-
-
-
+    private fun loadPublications(call: Call<List<MainPublicationModel>>, response: Response<List<MainPublicationModel>>,v:View) {
+        val recyclerView_: RecyclerView = v.findViewById(R.id.recyclerView_home)
+        recyclerView_.layoutManager = LinearLayoutManager(context)
+        recyclerView_.adapter =
+            RecyclerAdapterMainPublications(response.body() as ArrayList<MainPublicationModel>)
 
     }
 

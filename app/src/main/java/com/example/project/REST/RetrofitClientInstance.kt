@@ -17,4 +17,8 @@ object RetrofitClientInstance {
             }
             return retrofit
         }
+
+    val service = retrofitInstance!!.create(
+        GetDataService::class.java
+    )
 }

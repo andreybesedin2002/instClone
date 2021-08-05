@@ -60,24 +60,12 @@ class CommentsFragment : Fragment() {
         sendBtn = root.findViewById(R.id.sendBtn) as Button?
         sendBtn!!.setOnClickListener {
             if((recyclerView_.adapter as RecyclerAdapterComments).replyPosition!=null){
-                Log.i(
-                    "TAG",
-                    "addReply _ : ${(recyclerView_.adapter as RecyclerAdapterComments).replyPosition!!}"
-                )
-
-
-
 
                 (recyclerView_.adapter as RecyclerAdapterComments).addReply(
                     (recyclerView_.adapter as RecyclerAdapterComments).replyPosition,
                     inputField!!.text.toString(),
                     recyclerView_.findViewHolderForAdapterPosition((recyclerView_.adapter as RecyclerAdapterComments).replyPosition!!)
                 )
-
-
-
-
-
                 recyclerView_.findViewHolderForAdapterPosition((recyclerView_.adapter as RecyclerAdapterComments).replyPosition!!)
             }
 
