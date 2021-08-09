@@ -12,6 +12,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project.DB.Messages.Message
+import com.example.project.REST.ChatModel
 import com.example.project.ui.chat_list.ChatListFragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.squareup.picasso.Callback
@@ -21,7 +22,7 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import java.util.*
 
 
-class RecyclerAdapterChatList(private val names: ArrayList<Message>) :
+class RecyclerAdapterChatList(private val names: ArrayList<ChatModel>) :
     RecyclerView.Adapter<RecyclerAdapterChatList.MyViewHolder>() {
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -40,13 +41,7 @@ class RecyclerAdapterChatList(private val names: ArrayList<Message>) :
 
     }
 
-    fun addNewRandomItems(t: List<Message>) {
-        Log.i("-", 10.toString())
-        val curs = names.size
-        (0..9).forEach { i ->
-            names.add(t[i])
-        }
-    }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val itemView: View = LayoutInflater.from(parent.context)
@@ -59,8 +54,8 @@ class RecyclerAdapterChatList(private val names: ArrayList<Message>) :
     @DelicateCoroutinesApi
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.largeTextView?.text = "I’m looking for tips around capturing the milky way. I have a 6D with a 24-100mm..."
-        holder.smallTextView?.text = names[position].text
+        holder.largeTextView?.text = names[position].largeText
+        holder.smallTextView?.text = names[position].smallText
 
         val tf_roboto = Typeface.createFromAsset(
             holder.itemView.context.assets,

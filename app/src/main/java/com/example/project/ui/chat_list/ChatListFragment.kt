@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.RelativeLayout
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
@@ -18,12 +19,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.project.*
 import com.example.project.DB.AppDataBase
 import com.example.project.DB.Messages.Message
+import com.example.project.REST.ChatModel
+import com.example.project.REST.MessageMedel
+import com.example.project.REST.RetrofitClientInstance
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.PublishSubject
 import kotlinx.coroutines.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback as BottomSheetCallback1
 
 
@@ -68,6 +75,24 @@ class ChatListFragment : Fragment() {
 //
 //        MainAct.toolbar.setNavigationIcon(R.drawable.ic_baseline_navigate_before_24)
 //
+        val call: Call<List<ChatModel>> = RetrofitClientInstance.service.getChats()
+
+        call.enqueue(object : Callback<List<ChatModel>> {
+            override fun onResponse(
+                call: Call<List<ChatModel>>,
+                response: Response<List<ChatModel>>
+            ) =
+                loadChats(call, response, root)
+
+            override fun onFailure(call: Call<List<ChatModel>>, t: Throwable) {
+                Toast.makeText(
+                    context,
+                    "Something went wrong...Please try later!",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+            }
+        })
 
         //создание затемнение при появлении bottomSheetView
         back_dim_layout = root.findViewById(R.id.bac_dim_layout)
@@ -77,40 +102,6 @@ class ChatListFragment : Fragment() {
             RecyclerAdapterPhotosList.isActive = true
         }
 
-        //создание recyclerView
-        recyclerView_ = root.findViewById(R.id.recyclerView)
-        recyclerView_.layoutManager = LinearLayoutManager(context)
-        recyclerView_.adapter = RecyclerAdapterChatList(fillRecycleList() as ArrayList<Message>)
-
-
-        //divider
-        val dividerItemDecoration = DividerItemDecoration(context, RecyclerView.VERTICAL)
-        dividerItemDecoration.setDrawable(resources.getDrawable(R.drawable.divider_drawable))
-        recyclerView_.addItemDecoration(dividerItemDecoration)
-
-        //scrool to position 0
-        recyclerView_.scrollToPosition(0)
-
-        firstVisibleInListview =
-            (recyclerView_.layoutManager as LinearLayoutManager?)!!.findFirstVisibleItemPosition()
-        lastVisibleInListview =
-            (recyclerView_.layoutManager as LinearLayoutManager?)!!.findLastVisibleItemPosition()
-
-
-        recyclerView_.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-
-                val currentFirstVisible: Int =
-                    (recyclerView.layoutManager as LinearLayoutManager?)!!.findFirstVisibleItemPosition()
-                val currentLastVisible: Int =
-                    (recyclerView.layoutManager as LinearLayoutManager?)!!.findLastVisibleItemPosition()
-                if (currentLastVisible == lastLoadedInListview) scrollLoadingChannel.onNext(lastLoadedInListview)
-
-                firstVisibleInListview = currentFirstVisible
-                lastVisibleInListview = currentLastVisible
-            }
-        })
 
         //  recycleview для bottomSheet
         val recyclerViewBottomSheet: RecyclerView = root.findViewById(R.id.recyclerView_bottom_sheet)
@@ -150,9 +141,46 @@ class ChatListFragment : Fragment() {
         mgScrollView.isSmoothScrollingEnabled = true
 
 
-        createStringSubscriber()
+     //   createStringSubscriber()
 
         return root
+    }   private fun loadChats(call: Call<List<ChatModel>>, response: Response<List<ChatModel>>, v: View?) {
+
+        //создание recyclerView
+        recyclerView_ = v!!.findViewById(R.id.recyclerView)
+        recyclerView_.layoutManager = LinearLayoutManager(context)
+        recyclerView_.adapter = RecyclerAdapterChatList(response.body() as ArrayList<ChatModel>)
+
+
+        //divider
+        val dividerItemDecoration = DividerItemDecoration(context, RecyclerView.VERTICAL)
+        dividerItemDecoration.setDrawable(resources.getDrawable(R.drawable.divider_drawable))
+        recyclerView_.addItemDecoration(dividerItemDecoration)
+
+        //scrool to position 0
+        recyclerView_.scrollToPosition(0)
+
+        firstVisibleInListview =
+            (recyclerView_.layoutManager as LinearLayoutManager?)!!.findFirstVisibleItemPosition()
+        lastVisibleInListview =
+            (recyclerView_.layoutManager as LinearLayoutManager?)!!.findLastVisibleItemPosition()
+
+
+        recyclerView_.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                val currentFirstVisible: Int =
+                    (recyclerView.layoutManager as LinearLayoutManager?)!!.findFirstVisibleItemPosition()
+                val currentLastVisible: Int =
+                    (recyclerView.layoutManager as LinearLayoutManager?)!!.findLastVisibleItemPosition()
+                if (currentLastVisible == lastLoadedInListview) scrollLoadingChannel.onNext(lastLoadedInListview)
+
+                firstVisibleInListview = currentFirstVisible
+                lastVisibleInListview = currentLastVisible
+            }
+        })
+
     }
 
     private fun fillRecycleBottomSheetList(): ArrayList<ArrayList<Int>> {
@@ -190,30 +218,30 @@ class ChatListFragment : Fragment() {
     @SuppressLint("CheckResult")
     suspend fun loadData(lastloaded: Int) {
 
-        val toLoadingChannelSubscriber: io.reactivex.rxjava3.core.Observer<List<Message>> = object :
-            io.reactivex.rxjava3.core.Observer<List<Message>> {
-            override fun onSubscribe(d: Disposable) {
-            }
-
-            override fun onComplete() {
-            }
-
-            override fun onNext(t: List<Message>) {
-                val ad = recyclerView_.adapter as RecyclerAdapterChatList
-                ad.addNewRandomItems(t)
-                ad.notifyItemInserted(ad.itemCount - 9)
-                lastLoadedInListview += 10
-                ad.notifyDataSetChanged()
-                createStringSubscriber()
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-        }
-
-        DataService().dataChats(lastloaded).subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread()).subscribe(toLoadingChannelSubscriber)
+//        val toLoadingChannelSubscriber: io.reactivex.rxjava3.core.Observer<List<ChatModel>> = object :
+//            io.reactivex.rxjava3.core.Observer<List<ChatModel>> {
+//            override fun onSubscribe(d: Disposable) {
+//            }
+//
+//            override fun onComplete() {
+//            }
+//
+//            override fun onNext(t: List<ChatModel>) {
+//                val ad = recyclerView_.adapter as RecyclerAdapterChatList
+//                ad.addNewRandomItems(t)
+//                ad.notifyItemInserted(ad.itemCount - 9)
+//                lastLoadedInListview += 10
+//                ad.notifyDataSetChanged()
+//                createStringSubscriber()
+//            }
+//
+//            override fun onError(e: Throwable) {
+//
+//            }
+//        }
+//
+//        DataService().dataChats(lastloaded).subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread()).subscribe(toLoadingChannelSubscriber)
     }
 
 

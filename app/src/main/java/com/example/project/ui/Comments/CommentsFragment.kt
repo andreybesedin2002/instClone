@@ -6,34 +6,31 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project.DB.Comments.Comment
 import com.example.project.DB.Comments.ReplyComment
 import com.example.project.R
+import com.example.project.REST.CommentsModel
+import com.example.project.REST.RestApi
+import com.example.project.REST.RetrofitClientInstance
 import com.example.project.RecyclerAdapterComments
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
+import retrofit2.Call
+import retrofit2.Response
 import java.util.*
 
 class CommentsFragment : Fragment() {
 
     companion object {
-        fun newInstance() = CommentsFragment()
 
         @SuppressLint("StaticFieldLeak")
-        var inputField: EditText? = null
-
-        @SuppressLint("StaticFieldLeak")
-        var sendBtn: Button? = null
-
+        lateinit var commentEditText: CommentEditText
+        lateinit var recyclerView_: RecyclerView
     }
-
 
 
     @SuppressLint("UseRequireInsteadOfGet")
@@ -44,41 +41,39 @@ class CommentsFragment : Fragment() {
 
         val root = inflater.inflate(R.layout.fragment_comments, container, false)
 
-        val recyclerView_: RecyclerView = root.findViewById(R.id.recyclerview_comments) as RecyclerView
-        recyclerView_.layoutManager = LinearLayoutManager(context)
-
         val arg1Value = arguments!!.getString("arg1")
         val arg2Value = arguments!!.getInt("arg2")
         Log.i("TAG", "onCreateView: + $arg1Value")
         Log.i("TAG", "onCreateView: + $arg2Value")
-        recyclerView_.adapter = RecyclerAdapterComments(
-            fillList(arg1Value) as ArrayList<Comment>,
-            this
+
+        val call: Call<List<CommentsModel>> = RetrofitClientInstance.service.getComments(arg2Value)
+
+        RestApi.run(call,
+            { response: Response<List<CommentsModel>>, _: View ->
+                Log.i("TAG", "onCreateView: recyclerview_comments ${response.body()}")
+                recyclerView_ = root.findViewById(R.id.recyclerview_comments) as RecyclerView
+                recyclerView_.layoutManager = LinearLayoutManager(context)
+                recyclerView_.adapter =
+                    RecyclerAdapterComments(response.body() as ArrayList<CommentsModel>?, this)
+                commentEditText = CommentEditText(
+                    root, R.id.input_filed, R.id.sendBtn,
+                    recyclerView_.adapter as RecyclerAdapterComments
+                )
+            }, {}, root
         )
 
-        inputField = root.findViewById(R.id.input_filed) as EditText?
-        sendBtn = root.findViewById(R.id.sendBtn) as Button?
-        sendBtn!!.setOnClickListener {
-            if((recyclerView_.adapter as RecyclerAdapterComments).replyPosition!=null){
 
-                (recyclerView_.adapter as RecyclerAdapterComments).addReply(
-                    (recyclerView_.adapter as RecyclerAdapterComments).replyPosition,
-                    inputField!!.text.toString(),
-                    recyclerView_.findViewHolderForAdapterPosition((recyclerView_.adapter as RecyclerAdapterComments).replyPosition!!)
-                )
-                recyclerView_.findViewHolderForAdapterPosition((recyclerView_.adapter as RecyclerAdapterComments).replyPosition!!)
-            }
 
-            Log.i("TAG", "onCreateView: fgcvhbjklhgfcvbn")
-            (recyclerView_.adapter as RecyclerAdapterComments).addComment(inputField!!.text.toString())
-            (recyclerView_).scrollToPosition((recyclerView_.adapter as RecyclerAdapterComments).itemCount - 1)
-        }
+
+
+
+
         return root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        }
+    }
 
     private fun fillList(get: String?): List<Comment> {
         Log.i("TAG", "fillList: vgbhj $get")
@@ -106,10 +101,10 @@ class CommentsFragment : Fragment() {
         return Comment(1, 1, "12:32", 0, 1, data_comment, 5, null)
     }
 
-    fun setDataToEditText(data: String) {
-        inputField!!.setText(data.toCharArray(), 0, data.length)
-        //  inputField!!.setText(R.string.app_name)
-
-    }
+//    fun setDataToEditText(data: String) {
+//        inputField!!.setText(data.toCharArray(), 0, data.length)
+//        //  inputField!!.setText(R.string.app_name)
+//
+//    }
 
 }
